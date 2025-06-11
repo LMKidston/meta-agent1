@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/types/form-data'
-import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS, AGENT_TYPE_FRAMEWORK_PREFERENCES, AGENT_TYPE_DEPTH_CONCEPTS } from '@/lib/prompt-templates'
+import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS, AGENT_TYPE_FRAMEWORK_PREFERENCES, AGENT_TYPE_DEPTH_CONCEPTS, AGENT_TYPE_QUESTIONS } from '@/lib/prompt-templates'
 import { Copy, Check } from 'lucide-react'
 
 const initialFormData: FormData = {
@@ -183,6 +183,51 @@ export default function MetaAgentForm() {
     }
   }
 
+  // Get agent-specific question variations
+  const getAgentQuestions = () => {
+    if (!formData.agentType) return null
+    return AGENT_TYPE_QUESTIONS[formData.agentType as keyof typeof AGENT_TYPE_QUESTIONS] || null
+  }
+
+  // Get primary goal question text
+  const getPrimaryGoalQuestion = () => {
+    const agentQuestions = getAgentQuestions()
+    return agentQuestions?.primaryGoal || "What's the primary goal of your agent?"
+  }
+
+  // Get task options
+  const getTaskOptions = () => {
+    const agentQuestions = getAgentQuestions()
+    return agentQuestions?.tasks || {
+      label: "What specific tasks should your agent help with? (Select all that apply)",
+      options: [
+        'Answer questions',
+        'Provide step-by-step guidance',
+        'Generate ideas',
+        'Review and critique work',
+        'Create templates or examples',
+        'Explain complex concepts',
+        'Troubleshoot problems',
+        'Make recommendations'
+      ]
+    }
+  }
+
+  // Get target audience options
+  const getTargetAudienceOptions = () => {
+    const agentQuestions = getAgentQuestions()
+    return agentQuestions?.targetAudience || {
+      label: "Who is your target audience?",
+      options: [
+        { value: 'beginners', label: 'Beginners - Little to no experience' },
+        { value: 'intermediate', label: 'Intermediate - Some experience' },
+        { value: 'advanced', label: 'Advanced - Experienced users' },
+        { value: 'experts', label: 'Experts - Professional level' },
+        { value: 'mixed', label: 'Mixed - Adapt to user level' }
+      ]
+    }
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 space-y-8">
@@ -245,12 +290,20 @@ export default function MetaAgentForm() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              What's the primary goal of your agent?
+              {getPrimaryGoalQuestion()}
+              {formData.agentType && (
+                <span className="text-sm text-blue-600 block mt-1">
+                  Customized for {formData.agentType}
+                </span>
+              )}
             </label>
             <textarea
               value={formData.primaryGoal}
               onChange={(e) => setFormData(prev => ({ ...prev, primaryGoal: e.target.value }))}
-              placeholder="e.g., Help users learn programming concepts, Provide business strategy advice, Assist with creative writing..."
+              placeholder={formData.agentType === 'consultant' ? "e.g., Help companies improve operational efficiency, Guide strategic planning decisions, Support digital transformation initiatives..." 
+                : formData.agentType === 'teacher' ? "e.g., Help students master calculus concepts, Improve writing skills, Prepare for certification exams..."
+                : formData.agentType === 'product-manager' ? "e.g., Increase user engagement by 25%, Launch 3 major features per quarter, Improve product-market fit..."
+                : "e.g., Help users learn programming concepts, Provide business strategy advice, Assist with creative writing..."}
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows={3}
             />
@@ -258,19 +311,15 @@ export default function MetaAgentForm() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              What specific tasks should your agent help with? (Select all that apply)
+              {getTaskOptions().label}
+              {formData.agentType && (
+                <span className="text-sm text-blue-600 block mt-1">
+                  {formData.agentType} specific tasks
+                </span>
+              )}
             </label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {[
-                'Answer questions',
-                'Provide step-by-step guidance',
-                'Generate ideas',
-                'Review and critique work',
-                'Create templates or examples',
-                'Explain complex concepts',
-                'Troubleshoot problems',
-                'Make recommendations'
-              ].map((task) => (
+              {getTaskOptions().options.map((task) => (
                 <label key={task} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                   <input
                     type="checkbox"
@@ -372,16 +421,15 @@ export default function MetaAgentForm() {
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Who is your target audience?
+              {getTargetAudienceOptions().label}
+              {formData.agentType && (
+                <span className="text-sm text-blue-600 block mt-1">
+                  {formData.agentType} audience targeting
+                </span>
+              )}
             </label>
             <div className="space-y-2">
-              {[
-                { value: 'beginners', label: 'Beginners - Little to no experience' },
-                { value: 'intermediate', label: 'Intermediate - Some experience' },
-                { value: 'advanced', label: 'Advanced - Experienced users' },
-                { value: 'experts', label: 'Experts - Professional level' },
-                { value: 'mixed', label: 'Mixed - Adapt to user level' }
-              ].map((option) => (
+              {getTargetAudienceOptions().options.map((option) => (
                 <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                   <input
                     type="radio"

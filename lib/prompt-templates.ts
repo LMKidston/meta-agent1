@@ -1118,3 +1118,331 @@ export const AGENT_TYPE_DEPTH_CONCEPTS = {
     ]
   }
 }
+
+// Agent-type-specific question variations
+export const AGENT_TYPE_QUESTIONS = {
+  consultant: {
+    primaryGoal: "What strategic business outcomes should this consultant help clients achieve?",
+    tasks: {
+      label: "What consulting services should this agent provide?",
+      options: [
+        'Strategic planning and analysis',
+        'Business process improvement',
+        'Organizational change management',
+        'Market analysis and competitive intelligence',
+        'Financial analysis and planning',
+        'Risk assessment and mitigation',
+        'Performance optimization',
+        'Stakeholder engagement'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary clients?",
+      options: [
+        { value: 'executives', label: 'C-Suite Executives and Senior Leadership' },
+        { value: 'managers', label: 'Department Managers and Team Leaders' },
+        { value: 'entrepreneurs', label: 'Entrepreneurs and Business Owners' },
+        { value: 'consultants', label: 'Other Consultants and Advisors' },
+        { value: 'mixed-clients', label: 'Mixed Client Base - Adapt to Level' }
+      ]
+    }
+  },
+  
+  teacher: {
+    primaryGoal: "What learning outcomes should this educational agent help students achieve?",
+    tasks: {
+      label: "What teaching services should this agent provide?",
+      options: [
+        'Explain concepts and theories',
+        'Provide guided practice exercises',
+        'Create learning assessments',
+        'Develop personalized study plans',
+        'Offer feedback and improvement suggestions',
+        'Design interactive learning activities',
+        'Support exam preparation',
+        'Foster critical thinking skills'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary learners?",
+      options: [
+        { value: 'students', label: 'Students (K-12 or University)' },
+        { value: 'professionals', label: 'Working Professionals Seeking Skills' },
+        { value: 'beginners', label: 'Complete Beginners to the Subject' },
+        { value: 'advanced', label: 'Advanced Learners Seeking Mastery' },
+        { value: 'mixed-levels', label: 'Mixed Ability Levels - Differentiate Instruction' }
+      ]
+    }
+  },
+
+  'product-manager': {
+    primaryGoal: "What product success metrics should this agent help achieve?",
+    tasks: {
+      label: "What product management activities should this agent support?",
+      options: [
+        'Product roadmap planning and prioritization',
+        'User story creation and backlog management',
+        'Market research and competitive analysis',
+        'User feedback analysis and insights',
+        'Feature specification and requirements',
+        'Stakeholder communication and alignment',
+        'Performance metrics and analytics review',
+        'Go-to-market strategy development'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary stakeholders?",
+      options: [
+        { value: 'product-teams', label: 'Product Teams and Development Teams' },
+        { value: 'executives', label: 'Executive Leadership and Decision Makers' },
+        { value: 'customers', label: 'End Users and Customer Representatives' },
+        { value: 'cross-functional', label: 'Cross-functional Teams (Sales, Marketing, Support)' },
+        { value: 'mixed-stakeholders', label: 'Mixed Stakeholder Groups - Adapt Communication' }
+      ]
+    }
+  },
+
+  'ux-designer': {
+    primaryGoal: "What user experience improvements should this agent help deliver?",
+    tasks: {
+      label: "What UX design services should this agent provide?",
+      options: [
+        'User research and persona development',
+        'Information architecture and user flows',
+        'Wireframing and prototyping',
+        'Usability testing and analysis',
+        'Design system creation and maintenance',
+        'Accessibility compliance and guidelines',
+        'User interface design and visual design',
+        'Design feedback and iteration recommendations'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary collaborators?",
+      options: [
+        { value: 'designers', label: 'Other Designers and Design Teams' },
+        { value: 'developers', label: 'Developers and Engineering Teams' },
+        { value: 'product-managers', label: 'Product Managers and Product Teams' },
+        { value: 'stakeholders', label: 'Business Stakeholders and Clients' },
+        { value: 'mixed-teams', label: 'Cross-functional Teams - Adapt to Role' }
+      ]
+    }
+  },
+
+  'sales-rep': {
+    primaryGoal: "What sales performance outcomes should this agent help achieve?",
+    tasks: {
+      label: "What sales activities should this agent support?",
+      options: [
+        'Lead qualification and prospecting',
+        'Customer needs assessment and discovery',
+        'Proposal development and presentation',
+        'Objection handling and negotiation',
+        'Relationship building and account management',
+        'Sales pipeline management and forecasting',
+        'Competitive positioning and differentiation',
+        'Customer onboarding and success'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary prospects and customers?",
+      options: [
+        { value: 'b2b-decision-makers', label: 'B2B Decision Makers and Executives' },
+        { value: 'technical-buyers', label: 'Technical Buyers and Evaluators' },
+        { value: 'small-business', label: 'Small Business Owners and Entrepreneurs' },
+        { value: 'enterprise', label: 'Enterprise Accounts and Large Organizations' },
+        { value: 'mixed-segments', label: 'Mixed Customer Segments - Adapt Approach' }
+      ]
+    }
+  },
+
+  analyst: {
+    primaryGoal: "What analytical insights should this agent help deliver?",
+    tasks: {
+      label: "What analytical services should this agent provide?",
+      options: [
+        'Data collection and cleaning',
+        'Statistical analysis and modeling',
+        'Trend identification and forecasting',
+        'Performance metrics and KPI tracking',
+        'Report generation and visualization',
+        'Hypothesis testing and validation',
+        'Comparative analysis and benchmarking',
+        'Recommendations based on data insights'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary data consumers?",
+      options: [
+        { value: 'executives', label: 'Executives and Senior Leadership' },
+        { value: 'managers', label: 'Department Managers and Team Leaders' },
+        { value: 'analysts', label: 'Other Analysts and Data Teams' },
+        { value: 'stakeholders', label: 'Business Stakeholders and Decision Makers' },
+        { value: 'mixed-audience', label: 'Mixed Audience - Adapt Technical Level' }
+      ]
+    }
+  },
+
+  'investment-advisor': {
+    primaryGoal: "What investment outcomes should this agent help clients achieve?",
+    tasks: {
+      label: "What investment advisory services should this agent provide?",
+      options: [
+        'Portfolio analysis and optimization',
+        'Investment research and recommendations',
+        'Risk assessment and management',
+        'Market analysis and economic outlook',
+        'Asset allocation and diversification',
+        'Performance monitoring and reporting',
+        'Tax-efficient investment strategies',
+        'Financial planning and goal setting'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary investment clients?",
+      options: [
+        { value: 'individual-investors', label: 'Individual Retail Investors' },
+        { value: 'high-net-worth', label: 'High Net Worth Individuals and Families' },
+        { value: 'institutional', label: 'Institutional Investors and Fund Managers' },
+        { value: 'financial-advisors', label: 'Financial Advisors and Wealth Managers' },
+        { value: 'mixed-clients', label: 'Mixed Client Base - Adapt to Sophistication Level' }
+      ]
+    }
+  },
+
+  // Adding remaining agent types
+  creator: {
+    primaryGoal: "What creative outputs should this agent help produce?",
+    tasks: {
+      label: "What creative services should this agent provide?",
+      options: [
+        'Generate creative concepts and ideas',
+        'Develop content strategies and frameworks',
+        'Create copy and written content',
+        'Design visual and multimedia content',
+        'Provide creative feedback and iteration',
+        'Build brand messaging and positioning',
+        'Develop creative briefs and guidelines',
+        'Support creative project management'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary creative collaborators?",
+      options: [
+        { value: 'creative-teams', label: 'Creative Teams and Content Creators' },
+        { value: 'marketing-teams', label: 'Marketing Teams and Brand Managers' },
+        { value: 'clients', label: 'Clients and External Stakeholders' },
+        { value: 'cross-functional', label: 'Cross-functional Teams (Product, Sales, PR)' },
+        { value: 'mixed-creative', label: 'Mixed Creative Audiences - Adapt Style' }
+      ]
+    }
+  },
+
+  developer: {
+    primaryGoal: "What technical problems should this agent help solve?",
+    tasks: {
+      label: "What development support should this agent provide?",
+      options: [
+        'Code review and optimization suggestions',
+        'Architecture design and technical planning',
+        'Debugging and troubleshooting assistance',
+        'Best practices and coding standards guidance',
+        'API design and integration support',
+        'Performance optimization recommendations',
+        'Security analysis and vulnerability assessment',
+        'Documentation and technical writing'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary technical collaborators?",
+      options: [
+        { value: 'junior-developers', label: 'Junior Developers and New Team Members' },
+        { value: 'senior-developers', label: 'Senior Developers and Tech Leads' },
+        { value: 'cross-functional', label: 'Cross-functional Teams (Product, QA, DevOps)' },
+        { value: 'technical-stakeholders', label: 'Technical Stakeholders and Architects' },
+        { value: 'mixed-technical', label: 'Mixed Technical Levels - Adapt Complexity' }
+      ]
+    }
+  },
+
+  researcher: {
+    primaryGoal: "What research insights should this agent help uncover?",
+    tasks: {
+      label: "What research services should this agent provide?",
+      options: [
+        'Literature review and source analysis',
+        'Data collection and methodology design',
+        'Statistical analysis and interpretation',
+        'Hypothesis development and testing',
+        'Research synthesis and reporting',
+        'Peer review and academic writing support',
+        'Grant proposal development',
+        'Research ethics and compliance guidance'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary research stakeholders?",
+      options: [
+        { value: 'academic-researchers', label: 'Academic Researchers and Faculty' },
+        { value: 'graduate-students', label: 'Graduate Students and Research Assistants' },
+        { value: 'industry-researchers', label: 'Industry Researchers and R&D Teams' },
+        { value: 'policy-makers', label: 'Policy Makers and Decision Makers' },
+        { value: 'mixed-research', label: 'Mixed Research Community - Adapt Rigor' }
+      ]
+    }
+  },
+
+  coach: {
+    primaryGoal: "What personal or professional growth should this agent help achieve?",
+    tasks: {
+      label: "What coaching services should this agent provide?",
+      options: [
+        'Goal setting and action planning',
+        'Performance feedback and improvement',
+        'Skill development and training guidance',
+        'Motivation and accountability support',
+        'Career development and planning',
+        'Personal effectiveness and productivity',
+        'Leadership development and mentoring',
+        'Conflict resolution and communication skills'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary coaching clients?",
+      options: [
+        { value: 'individual-clients', label: 'Individual Clients and Coachees' },
+        { value: 'team-members', label: 'Team Members and Direct Reports' },
+        { value: 'leaders', label: 'Leaders and Managers' },
+        { value: 'professionals', label: 'Working Professionals Seeking Growth' },
+        { value: 'mixed-clients', label: 'Mixed Client Base - Adapt Approach' }
+      ]
+    }
+  },
+
+  assistant: {
+    primaryGoal: "What tasks and processes should this agent help streamline?",
+    tasks: {
+      label: "What assistance should this agent provide?",
+      options: [
+        'Task organization and prioritization',
+        'Schedule management and coordination',
+        'Information research and compilation',
+        'Process documentation and optimization',
+        'Communication and correspondence support',
+        'Project tracking and follow-up',
+        'Resource management and allocation',
+        'Workflow automation and efficiency'
+      ]
+    },
+    targetAudience: {
+      label: "Who are the primary users needing assistance?",
+      options: [
+        { value: 'busy-professionals', label: 'Busy Professionals and Executives' },
+        { value: 'team-leaders', label: 'Team Leaders and Project Managers' },
+        { value: 'small-business', label: 'Small Business Owners and Entrepreneurs' },
+        { value: 'remote-workers', label: 'Remote Workers and Freelancers' },
+        { value: 'mixed-users', label: 'Mixed User Base - Adapt Support Level' }
+      ]
+    }
+  }
+}
