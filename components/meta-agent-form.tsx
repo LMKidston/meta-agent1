@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/types/form-data'
-import { generatePrompt, AGENT_TYPES, INDUSTRIES } from '@/lib/prompt-templates'
+import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES } from '@/lib/prompt-templates'
 import { Copy, Check } from 'lucide-react'
 
 const initialFormData: FormData = {
@@ -78,6 +78,18 @@ export default function MetaAgentForm() {
     })
   }
 
+  // Get industry-specific frameworks
+  const getIndustryFrameworks = () => {
+    if (!formData.industry) return []
+    return INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || INDUSTRY_FRAMEWORKS.general
+  }
+
+  // Get industry-specific recommendation styles
+  const getIndustryRecommendationStyles = () => {
+    if (!formData.industry) return INDUSTRY_RECOMMENDATION_STYLES.general
+    return INDUSTRY_RECOMMENDATION_STYLES[formData.industry as keyof typeof INDUSTRY_RECOMMENDATION_STYLES] || INDUSTRY_RECOMMENDATION_STYLES.general
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 space-y-8">
@@ -115,7 +127,13 @@ export default function MetaAgentForm() {
             </label>
             <select
               value={formData.industry}
-              onChange={(e) => setFormData(prev => ({ ...prev, industry: e.target.value }))}
+              onChange={(e) => setFormData(prev => ({ 
+                ...prev, 
+                industry: e.target.value,
+                // Clear framework selections when industry changes
+                domainFrameworks: [],
+                recommendationStyle: ''
+              }))}
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">Select an industry</option>
@@ -339,32 +357,30 @@ export default function MetaAgentForm() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
               What frameworks or methodologies should your agent use? (Select all that apply)
+              {formData.industry && (
+                <span className="text-sm text-blue-600 block mt-1">
+                  Showing {formData.industry} industry frameworks
+                </span>
+              )}
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {[
-                'SWOT Analysis',
-                'Porter\'s Five Forces',
-                'Financial Ratio Analysis',
-                'DCF Valuation',
-                'Risk Assessment Matrix',
-                'Competitor Analysis',
-                'Market Research Framework',
-                'Decision Trees',
-                'Cost-Benefit Analysis',
-                'PESTLE Analysis',
-                'Balanced Scorecard',
-                'Lean Canvas'
-              ].map((framework) => (
-                <label key={framework} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={formData.domainFrameworks.includes(framework)}
-                    onChange={() => handleArrayToggle('domainFrameworks', framework)}
-                  />
-                  <span>{framework}</span>
-                </label>
-              ))}
-            </div>
+            {getIndustryFrameworks().length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {getIndustryFrameworks().map((framework) => (
+                  <label key={framework} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.domainFrameworks.includes(framework)}
+                      onChange={() => handleArrayToggle('domainFrameworks', framework)}
+                    />
+                    <span>{framework}</span>
+                  </label>
+                ))}
+              </div>
+            ) : (
+              <div className="text-gray-500 italic p-4 bg-gray-50 rounded">
+                Please select an industry above to see relevant frameworks and methodologies.
+              </div>
+            )}
           </div>
 
           <div>
@@ -496,15 +512,14 @@ export default function MetaAgentForm() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
               How should your agent make recommendations?
+              {formData.industry && (
+                <span className="text-sm text-blue-600 block mt-1">
+                  Showing {formData.industry} industry recommendation styles
+                </span>
+              )}
             </label>
             <div className="space-y-2">
-              {[
-                { value: 'clear-directive', label: 'Clear directives (Buy/Sell/Hold)' },
-                { value: 'ranked-options', label: 'Ranked options with reasoning' },
-                { value: 'pros-cons', label: 'Pros and cons analysis' },
-                { value: 'risk-weighted', label: 'Risk-weighted recommendations' },
-                { value: 'conditional', label: 'Conditional recommendations based on scenarios' }
-              ].map((option) => (
+              {getIndustryRecommendationStyles().map((option) => (
                 <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                   <input
                     type="radio"

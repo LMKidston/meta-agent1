@@ -116,3 +116,242 @@ export const INDUSTRIES = [
   { value: 'creative', label: 'Creative Arts' },
   { value: 'general', label: 'General Purpose' }
 ]
+
+// Industry-specific frameworks and methodologies
+export const INDUSTRY_FRAMEWORKS = {
+  finance: [
+    'SWOT Analysis',
+    'Porter\'s Five Forces',
+    'Financial Ratio Analysis',
+    'DCF Valuation',
+    'Risk Assessment Matrix',
+    'Competitor Analysis',
+    'Technical Analysis',
+    'Fundamental Analysis',
+    'Monte Carlo Simulation',
+    'Black-Scholes Model',
+    'Capital Asset Pricing Model (CAPM)',
+    'Economic Value Added (EVA)'
+  ],
+  healthcare: [
+    'Clinical Decision Support',
+    'Evidence-Based Medicine',
+    'Health Technology Assessment',
+    'Clinical Practice Guidelines',
+    'Risk Stratification',
+    'Care Pathway Analysis',
+    'Health Economics Evaluation',
+    'Patient Safety Framework',
+    'Quality Improvement (PDSA)',
+    'Population Health Management',
+    'Healthcare Analytics',
+    'Regulatory Compliance Framework'
+  ],
+  technology: [
+    'Agile Framework',
+    'DevOps Methodology',
+    'System Architecture Design',
+    'API Design Patterns',
+    'Security Framework (OWASP)',
+    'Performance Optimization',
+    'Scalability Analysis',
+    'Technical Debt Assessment',
+    'Code Review Process',
+    'Testing Pyramid',
+    'Continuous Integration/Deployment',
+    'Cloud Architecture Patterns'
+  ],
+  marketing: [
+    'Customer Journey Mapping',
+    'Marketing Mix (4Ps/7Ps)',
+    'Brand Positioning Framework',
+    'Customer Segmentation',
+    'A/B Testing Methodology',
+    'Attribution Modeling',
+    'Conversion Funnel Analysis',
+    'Customer Lifetime Value (CLV)',
+    'Market Research Framework',
+    'Content Strategy Framework',
+    'Social Media Analytics',
+    'ROI/ROAS Analysis'
+  ],
+  education: [
+    'Bloom\'s Taxonomy',
+    'Learning Objectives Framework',
+    'Instructional Design (ADDIE)',
+    'Assessment and Evaluation',
+    'Curriculum Development',
+    'Differentiated Instruction',
+    'Educational Technology Integration',
+    'Student Engagement Strategies',
+    'Learning Analytics',
+    'Competency-Based Education',
+    'Universal Design for Learning (UDL)',
+    'Peer Assessment Framework'
+  ],
+  legal: [
+    'Legal Research Methodology',
+    'Case Law Analysis',
+    'Statutory Interpretation',
+    'Contract Analysis Framework',
+    'Due Diligence Process',
+    'Risk Assessment (Legal)',
+    'Compliance Framework',
+    'Litigation Strategy',
+    'Legal Writing Standards',
+    'Client Interview Techniques',
+    'Ethical Guidelines Framework',
+    'Regulatory Analysis'
+  ],
+  retail: [
+    'Customer Experience Framework',
+    'Inventory Management',
+    'Merchandising Strategy',
+    'Price Optimization',
+    'Supply Chain Analysis',
+    'Market Basket Analysis',
+    'Category Management',
+    'Store Layout Optimization',
+    'Seasonal Planning',
+    'Customer Segmentation',
+    'Omnichannel Strategy',
+    'Retail Analytics'
+  ],
+  manufacturing: [
+    'Lean Manufacturing',
+    'Six Sigma',
+    'Total Quality Management (TQM)',
+    'Supply Chain Optimization',
+    'Production Planning',
+    'Just-in-Time (JIT)',
+    'Statistical Process Control',
+    'Value Stream Mapping',
+    'Root Cause Analysis',
+    'OEE (Overall Equipment Effectiveness)',
+    'Kaizen Framework',
+    'Safety Management System'
+  ],
+  consulting: [
+    'Problem-Solving Framework',
+    'Stakeholder Analysis',
+    'Change Management',
+    'Process Improvement',
+    'Business Case Development',
+    'Project Management (PMI)',
+    'Strategic Planning',
+    'Organizational Assessment',
+    'Data-Driven Decision Making',
+    'Client Engagement Framework',
+    'Implementation Planning',
+    'Performance Measurement'
+  ],
+  creative: [
+    'Design Thinking',
+    'Creative Brief Framework',
+    'Brand Development Process',
+    'User Experience (UX) Design',
+    'Creative Project Management',
+    'Concept Development',
+    'Visual Hierarchy Principles',
+    'Content Creation Framework',
+    'Creative Review Process',
+    'Portfolio Development',
+    'Client Presentation Framework',
+    'Creative Strategy Development'
+  ],
+  general: [
+    'SWOT Analysis',
+    'Problem-Solving Framework',
+    'Decision Matrix',
+    'Root Cause Analysis',
+    'Stakeholder Analysis',
+    'Risk Assessment',
+    'Process Mapping',
+    'Best Practices Framework',
+    'Quality Assurance',
+    'Performance Metrics',
+    'Strategic Planning',
+    'Project Management'
+  ]
+}
+
+// Industry-specific recommendation styles
+export const INDUSTRY_RECOMMENDATION_STYLES = {
+  finance: [
+    { value: 'buy-sell-hold', label: 'Buy/Sell/Hold recommendations' },
+    { value: 'risk-weighted', label: 'Risk-weighted portfolio allocation' },
+    { value: 'target-price', label: 'Target price with upside/downside' },
+    { value: 'rating-scale', label: 'Rating scale (Strong Buy to Strong Sell)' },
+    { value: 'scenario-based', label: 'Scenario-based projections' }
+  ],
+  healthcare: [
+    { value: 'clinical-guidelines', label: 'Evidence-based clinical recommendations' },
+    { value: 'treatment-pathways', label: 'Treatment pathway options' },
+    { value: 'risk-benefit', label: 'Risk-benefit analysis' },
+    { value: 'quality-metrics', label: 'Quality improvement recommendations' },
+    { value: 'safety-protocols', label: 'Safety and compliance guidelines' }
+  ],
+  technology: [
+    { value: 'implementation-roadmap', label: 'Technical implementation roadmap' },
+    { value: 'architecture-options', label: 'Architecture and design options' },
+    { value: 'best-practices', label: 'Industry best practices' },
+    { value: 'performance-optimization', label: 'Performance optimization steps' },
+    { value: 'security-recommendations', label: 'Security and compliance recommendations' }
+  ],
+  marketing: [
+    { value: 'campaign-strategy', label: 'Campaign strategy recommendations' },
+    { value: 'channel-optimization', label: 'Channel mix optimization' },
+    { value: 'budget-allocation', label: 'Budget allocation suggestions' },
+    { value: 'ab-testing', label: 'A/B testing recommendations' },
+    { value: 'performance-kpis', label: 'KPI-driven performance recommendations' }
+  ],
+  education: [
+    { value: 'learning-objectives', label: 'Learning objective-based recommendations' },
+    { value: 'instructional-strategies', label: 'Instructional strategy options' },
+    { value: 'assessment-methods', label: 'Assessment and evaluation methods' },
+    { value: 'differentiated-approach', label: 'Differentiated learning approaches' },
+    { value: 'improvement-plan', label: 'Student improvement action plans' }
+  ],
+  legal: [
+    { value: 'legal-strategy', label: 'Legal strategy recommendations' },
+    { value: 'compliance-guidance', label: 'Compliance and regulatory guidance' },
+    { value: 'risk-mitigation', label: 'Legal risk mitigation steps' },
+    { value: 'precedent-analysis', label: 'Precedent-based recommendations' },
+    { value: 'negotiation-strategy', label: 'Negotiation strategy options' }
+  ],
+  retail: [
+    { value: 'inventory-optimization', label: 'Inventory optimization recommendations' },
+    { value: 'pricing-strategy', label: 'Pricing and promotion strategies' },
+    { value: 'customer-experience', label: 'Customer experience improvements' },
+    { value: 'merchandising-plan', label: 'Merchandising and layout recommendations' },
+    { value: 'seasonal-strategy', label: 'Seasonal planning strategies' }
+  ],
+  manufacturing: [
+    { value: 'process-improvement', label: 'Process improvement recommendations' },
+    { value: 'quality-enhancement', label: 'Quality enhancement strategies' },
+    { value: 'efficiency-optimization', label: 'Operational efficiency optimization' },
+    { value: 'cost-reduction', label: 'Cost reduction initiatives' },
+    { value: 'safety-protocols', label: 'Safety and compliance protocols' }
+  ],
+  consulting: [
+    { value: 'strategic-options', label: 'Strategic options analysis' },
+    { value: 'implementation-plan', label: 'Implementation roadmap' },
+    { value: 'change-management', label: 'Change management recommendations' },
+    { value: 'performance-improvement', label: 'Performance improvement strategies' },
+    { value: 'stakeholder-alignment', label: 'Stakeholder alignment recommendations' }
+  ],
+  creative: [
+    { value: 'concept-development', label: 'Creative concept recommendations' },
+    { value: 'design-options', label: 'Design direction options' },
+    { value: 'brand-alignment', label: 'Brand-aligned creative strategies' },
+    { value: 'iteration-feedback', label: 'Iterative improvement suggestions' },
+    { value: 'execution-timeline', label: 'Creative execution timeline' }
+  ],
+  general: [
+    { value: 'clear-directive', label: 'Clear directives with action steps' },
+    { value: 'ranked-options', label: 'Ranked options with reasoning' },
+    { value: 'pros-cons', label: 'Pros and cons analysis' },
+    { value: 'step-by-step', label: 'Step-by-step implementation guide' },
+    { value: 'conditional', label: 'Conditional recommendations based on scenarios' }
+  ]
+}
