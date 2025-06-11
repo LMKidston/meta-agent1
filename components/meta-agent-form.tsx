@@ -78,52 +78,91 @@ export default function MetaAgentForm() {
     })
   }
 
-  // Get intelligently filtered frameworks based on both agent type and industry
+  // Get agent-first frameworks (prioritize agent type, add relevant industry context)
   const getFilteredFrameworks = () => {
-    const industryFrameworks = formData.industry 
-      ? INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || INDUSTRY_FRAMEWORKS.general
-      : INDUSTRY_FRAMEWORKS.general
-
     const agentTypeFrameworks = formData.agentType 
       ? AGENT_TYPE_FRAMEWORK_PREFERENCES[formData.agentType as keyof typeof AGENT_TYPE_FRAMEWORK_PREFERENCES] || []
       : []
 
-    // If we have both agent type and industry, show intersection + most relevant
+    const industryFrameworks = formData.industry 
+      ? INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || INDUSTRY_FRAMEWORKS.general
+      : INDUSTRY_FRAMEWORKS.general
+
+    // Priority 1: Agent type + industry (agent frameworks first, then compatible industry ones)
     if (formData.agentType && formData.industry) {
-      // Find frameworks that appear in both lists (intersection)
-      const intersection = industryFrameworks.filter(framework => 
-        agentTypeFrameworks.some(agentFramework => 
-          framework.toLowerCase().includes(agentFramework.toLowerCase()) ||
-          agentFramework.toLowerCase().includes(framework.toLowerCase()) ||
-          framework === agentFramework
-        )
-      )
+      // Start with ALL agent-specific frameworks
+      const primaryFrameworks = [...agentTypeFrameworks]
 
-      // Add agent-specific frameworks that are relevant to any industry
-      const agentSpecificRelevant = agentTypeFrameworks.filter(framework => 
-        ['Analysis', 'Framework', 'Management', 'Planning', 'Assessment', 'Strategy', 'Process'].some(keyword =>
-          framework.includes(keyword)
-        )
-      )
+      // Find industry frameworks that are compatible with this agent type
+      const compatibleIndustryFrameworks = industryFrameworks.filter(framework => {
+        // Include industry frameworks that align with agent's work style
+        const agentKeywords = getAgentCompatibilityKeywords(formData.agentType)
+        
+        // Score each framework based on keyword matches
+        const matches = agentKeywords.filter(keyword => 
+          framework.toLowerCase().includes(keyword.toLowerCase())
+        ).length
+        
+        // Only include frameworks with at least 1 keyword match
+        return matches > 0
+      })
+      .sort((a, b) => {
+        // Sort by number of keyword matches (more matches = higher priority)
+        const agentKeywords = getAgentCompatibilityKeywords(formData.agentType)
+        const aMatches = agentKeywords.filter(keyword => 
+          a.toLowerCase().includes(keyword.toLowerCase())
+        ).length
+        const bMatches = agentKeywords.filter(keyword => 
+          b.toLowerCase().includes(keyword.toLowerCase())
+        ).length
+        return bMatches - aMatches
+      })
+      .slice(0, 4) // Limit to 4 most compatible industry frameworks
 
-      // Combine and deduplicate
-      const allFrameworks = [...intersection, ...agentSpecificRelevant, ...industryFrameworks.slice(0, 8)]
-      const combined = Array.from(new Set(allFrameworks))
-      return combined.slice(0, 12) // Limit to 12 most relevant
+      // Combine: agent frameworks first, then compatible industry ones
+      const combined = [...primaryFrameworks, ...compatibleIndustryFrameworks]
+      return Array.from(new Set(combined)).slice(0, 12)
     }
 
-    // If we only have agent type, show agent-specific frameworks
+    // Priority 2: Agent type only
     if (formData.agentType && !formData.industry) {
       return agentTypeFrameworks
     }
 
-    // If we only have industry, show industry frameworks
+    // Priority 3: Industry only (no agent type selected)
     if (!formData.agentType && formData.industry) {
       return industryFrameworks
     }
 
-    // Default: show general frameworks
+    // Default: General frameworks
     return INDUSTRY_FRAMEWORKS.general
+  }
+
+  // Get keywords that help match industry frameworks to agent types
+  const getAgentCompatibilityKeywords = (agentType: string): string[] => {
+    const keywordMap: Record<string, string[]> = {
+      'consultant': ['Strategy', 'Analysis', 'Planning', 'Management', 'Assessment', 'Framework', 'Business', 'Process'],
+      'teacher': ['Learning', 'Assessment', 'Development', 'Instruction', 'Education', 'Framework', 'Guidelines', 'Training'],
+      'assistant': ['Management', 'Process', 'Organization', 'Planning', 'Framework', 'Workflow', 'Coordination', 'Administration'],
+      'analyst': ['Analysis', 'Data', 'Statistical', 'Performance', 'Metrics', 'Assessment', 'Analytics', 'Evaluation'],
+      'creator': ['Design', 'Creative', 'Content', 'Brand', 'Framework', 'Strategy', 'Development', 'Experience'],
+      'developer': ['Technical', 'Development', 'Design', 'Architecture', 'Framework', 'System', 'Integration', 'Security'],
+      'researcher': ['Research', 'Analysis', 'Data', 'Study', 'Framework', 'Assessment', 'Evidence', 'Methodology'],
+      'coach': ['Performance', 'Development', 'Goals', 'Skills', 'Framework', 'Assessment', 'Training', 'Support'],
+      'product-manager': ['Product', 'Strategy', 'Planning', 'Management', 'Framework', 'Analysis', 'Roadmap', 'User'],
+      'ux-designer': ['Design', 'User', 'Experience', 'Research', 'Framework', 'Analysis', 'Customer', 'Interface'],
+      'project-manager': ['Project', 'Management', 'Planning', 'Framework', 'Process', 'Risk', 'Resource', 'Timeline'],
+      'sales-rep': ['Customer', 'Sales', 'Management', 'Analysis', 'Framework', 'Process', 'Relationship', 'Engagement'],
+      'hr-specialist': ['Performance', 'Management', 'Development', 'Framework', 'Assessment', 'Planning', 'Employee', 'Talent'],
+      'customer-success': ['Customer', 'Management', 'Framework', 'Analysis', 'Process', 'Success', 'Relationship', 'Engagement'],
+      'investment-advisor': ['Analysis', 'Assessment', 'Strategy', 'Planning', 'Framework', 'Management', 'Performance', 'Risk'],
+      'therapist': ['Assessment', 'Framework', 'Planning', 'Development', 'Analysis', 'Guidelines', 'Treatment', 'Support'],
+      'compliance-officer': ['Compliance', 'Framework', 'Assessment', 'Management', 'Analysis', 'Process', 'Regulatory', 'Risk'],
+      'qa-specialist': ['Quality', 'Testing', 'Framework', 'Process', 'Assessment', 'Management', 'Standards', 'Control'],
+      'technical-writer': ['Documentation', 'Framework', 'Process', 'Design', 'Analysis', 'Guidelines', 'Information', 'Content'],
+      'innovation-catalyst': ['Innovation', 'Framework', 'Development', 'Analysis', 'Strategy', 'Design', 'Creative', 'Technology']
+    }
+    return keywordMap[agentType] || ['Framework', 'Analysis', 'Management', 'Process']
   }
 
   // Get agent-first recommendation styles (prioritize agent type over industry)
