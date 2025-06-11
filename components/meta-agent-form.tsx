@@ -143,53 +143,274 @@ export default function MetaAgentForm() {
     return INDUSTRY_FRAMEWORKS.general
   }
 
-  // Check if a framework should be excluded for a specific agent type
-  const isFrameworkExcludedForAgent = (framework: string, agentType: string): boolean => {
-    // Define frameworks that should be whitelisted for HR specialists from cybersecurity
-    if (agentType === 'hr-specialist') {
-      const hrAllowedCyberFrameworks = [
-        'Risk Assessment Matrix (Cyber)',
-        'Security Awareness Training',
-        'Compliance Frameworks (SOC 2, ISO 27001)'
-      ]
-      
-      // If this is a cybersecurity framework, only allow the HR-relevant ones
-      const cybersecurityFrameworks = [
-        'NIST Cybersecurity Framework', 'OWASP Top 10', 'Threat Modeling',
-        'Risk Assessment Matrix (Cyber)', 'Incident Response Framework',
-        'Penetration Testing Methodology', 'Security Controls Framework',
-        'Vulnerability Management', 'Identity and Access Management (IAM)',
-        'Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)',
-        'Cyber Threat Intelligence'
-      ]
-      
-      if (cybersecurityFrameworks.includes(framework)) {
-        return !hrAllowedCyberFrameworks.includes(framework)
+  // Get whitelisted industry frameworks for specific agent+industry combinations
+  const getWhitelistedIndustryFrameworks = (agentType: string, industry: string): string[] => {
+    const whitelist: Record<string, Record<string, string[]>> = {
+      'hr-specialist': {
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)'],
+        'finance': ['Risk Assessment', 'Regulatory Compliance Framework', 'Performance Measurement'],
+        'healthcare': ['Regulatory Compliance Framework', 'Performance Measurement', 'Training Framework'],
+        'technology': ['Performance Optimization', 'Agile Framework', 'Project Management'],
+        'manufacturing': ['Safety Management System', 'Performance Measurement', 'Training Framework'],
+        'legal': ['Compliance Framework', 'Regulatory Analysis', 'Ethical Guidelines Framework'],
+        'retail': ['Customer Experience Framework', 'Performance Metrics', 'Training Framework'],
+        'consulting': ['Performance Measurement', 'Stakeholder Analysis', 'Change Management'],
+        'education': ['Assessment and Evaluation', 'Training Framework', 'Performance Measurement'],
+        'marketing': ['Performance Metrics', 'Customer Segmentation', 'Training Framework']
+      },
+      'sales-rep': {
+        'cybersecurity': ['Security Awareness Training', 'Customer Segmentation', 'Performance Metrics'],
+        'finance': ['Customer Segmentation', 'Performance Measurement', 'Risk Assessment'],
+        'healthcare': ['Customer Experience Framework', 'Performance Measurement', 'Regulatory Compliance Framework'],
+        'technology': ['Customer Journey Mapping', 'Performance Optimization', 'Agile Framework'],
+        'manufacturing': ['Customer Experience Framework', 'Performance Measurement', 'Quality Assurance'],
+        'legal': ['Client Interview Techniques', 'Customer Segmentation', 'Performance Measurement'],
+        'retail': ['Customer Experience Framework', 'Customer Segmentation', 'Performance Metrics'],
+        'consulting': ['Client Engagement Framework', 'Customer Segmentation', 'Performance Measurement'],
+        'education': ['Customer Segmentation', 'Performance Measurement', 'Assessment and Evaluation'],
+        'marketing': ['Customer Journey Mapping', 'Customer Segmentation', 'Performance Metrics']
+      },
+      'teacher': {
+        'cybersecurity': ['Security Awareness Training', 'Training Framework', 'Compliance Frameworks (SOC 2, ISO 27001)'],
+        'finance': ['Risk Assessment', 'Performance Measurement', 'Regulatory Compliance Framework'],
+        'healthcare': ['Training Framework', 'Performance Measurement', 'Regulatory Compliance Framework'],
+        'technology': ['Agile Framework', 'Performance Optimization', 'Training Framework'],
+        'manufacturing': ['Training Framework', 'Safety Management System', 'Quality Assurance'],
+        'legal': ['Training Framework', 'Compliance Framework', 'Ethical Guidelines Framework'],
+        'retail': ['Training Framework', 'Customer Experience Framework', 'Performance Metrics'],
+        'consulting': ['Training Framework', 'Performance Measurement', 'Change Management'],
+        'education': ['Assessment and Evaluation', 'Training Framework', 'Performance Measurement'],
+        'marketing': ['Training Framework', 'Customer Journey Mapping', 'Performance Metrics']
+      },
+      'coach': {
+        'cybersecurity': ['Security Awareness Training', 'Performance Measurement', 'Training Framework'],
+        'finance': ['Performance Measurement', 'Risk Assessment', 'Strategic Planning'],
+        'healthcare': ['Performance Measurement', 'Training Framework', 'Quality Improvement (PDSA)'],
+        'technology': ['Performance Optimization', 'Agile Framework', 'Performance Measurement'],
+        'manufacturing': ['Performance Measurement', 'Training Framework', 'Quality Assurance'],
+        'legal': ['Performance Measurement', 'Training Framework', 'Ethical Guidelines Framework'],
+        'retail': ['Performance Metrics', 'Customer Experience Framework', 'Training Framework'],
+        'consulting': ['Performance Measurement', 'Change Management', 'Stakeholder Analysis'],
+        'education': ['Performance Measurement', 'Training Framework', 'Assessment and Evaluation'],
+        'marketing': ['Performance Metrics', 'Customer Journey Mapping', 'Training Framework']
+      },
+      'consultant': {
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Security Awareness Training'],
+        'finance': ['SWOT Analysis', 'Risk Assessment', 'Strategic Planning', 'Performance Measurement'],
+        'healthcare': ['Strategic Planning', 'Performance Measurement', 'Quality Improvement (PDSA)', 'Regulatory Compliance Framework'],
+        'technology': ['Agile Framework', 'Performance Optimization', 'Strategic Planning', 'Project Management'],
+        'manufacturing': ['Strategic Planning', 'Performance Measurement', 'Quality Assurance', 'Process Improvement'],
+        'legal': ['Strategic Planning', 'Risk Assessment (Legal)', 'Compliance Framework', 'Stakeholder Analysis'],
+        'retail': ['Strategic Planning', 'Customer Experience Framework', 'Performance Metrics', 'Market Analysis'],
+        'consulting': ['Strategic Planning', 'Stakeholder Analysis', 'Change Management', 'Performance Measurement'],
+        'education': ['Strategic Planning', 'Performance Measurement', 'Assessment and Evaluation', 'Change Management'],
+        'marketing': ['Strategic Planning', 'Customer Journey Mapping', 'Market Research Framework', 'Performance Metrics']
+      },
+      'developer': {
+        'cybersecurity': ['NIST Cybersecurity Framework', 'OWASP Top 10', 'Security Controls Framework', 'Threat Modeling'],
+        'finance': ['API Design Patterns', 'System Architecture Design', 'Security Framework (OWASP)', 'Performance Optimization'],
+        'healthcare': ['System Architecture Design', 'API Design Patterns', 'Security Framework (OWASP)', 'Regulatory Compliance Framework'],
+        'technology': ['Agile Framework', 'DevOps Methodology', 'API Design Patterns', 'System Architecture Design'],
+        'manufacturing': ['System Architecture Design', 'API Design Patterns', 'Performance Optimization', 'Quality Assurance'],
+        'legal': ['API Design Patterns', 'System Architecture Design', 'Security Framework (OWASP)', 'Compliance Framework'],
+        'retail': ['API Design Patterns', 'System Architecture Design', 'Performance Optimization', 'Customer Experience Framework'],
+        'consulting': ['System Architecture Design', 'API Design Patterns', 'Performance Optimization', 'Project Management'],
+        'education': ['System Architecture Design', 'API Design Patterns', 'Performance Optimization', 'Agile Framework'],
+        'marketing': ['API Design Patterns', 'System Architecture Design', 'Performance Optimization', 'Customer Journey Mapping']
+      },
+      'analyst': {
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Cyber Threat Intelligence', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Security Controls Framework'],
+        'finance': ['Financial Ratio Analysis', 'SWOT Analysis', 'Risk Assessment', 'Technical Analysis'],
+        'healthcare': ['Healthcare Analytics', 'Performance Measurement', 'Risk Assessment', 'Quality Improvement (PDSA)'],
+        'technology': ['Performance Optimization', 'System Architecture Design', 'Agile Framework', 'Technical Analysis'],
+        'manufacturing': ['Statistical Process Control', 'Performance Measurement', 'Quality Assurance', 'Root Cause Analysis'],
+        'legal': ['Risk Assessment (Legal)', 'Regulatory Analysis', 'Case Law Analysis', 'Performance Measurement'],
+        'retail': ['Market Basket Analysis', 'Customer Segmentation', 'Performance Metrics', 'Retail Analytics'],
+        'consulting': ['SWOT Analysis', 'Performance Measurement', 'Data-Driven Decision Making', 'Stakeholder Analysis'],
+        'education': ['Learning Analytics', 'Assessment and Evaluation', 'Performance Measurement', 'Student Engagement Strategies'],
+        'marketing': ['Customer Journey Mapping', 'A/B Testing Methodology', 'Attribution Modeling', 'Market Research Framework']
+      },
+      'creator': {
+        'cybersecurity': ['Security Awareness Training', 'Content Strategy Framework', 'Brand Development Process'],
+        'finance': ['Brand Development Process', 'Content Strategy Framework', 'Market Research Framework'],
+        'healthcare': ['Content Strategy Framework', 'Brand Development Process', 'Customer Experience Framework'],
+        'technology': ['User Experience (UX) Design', 'Design Thinking', 'Content Strategy Framework', 'Agile Framework'],
+        'manufacturing': ['Design Thinking', 'Content Strategy Framework', 'Brand Development Process'],
+        'legal': ['Content Strategy Framework', 'Brand Development Process', 'Client Presentation Framework'],
+        'retail': ['Brand Development Process', 'Customer Experience Framework', 'Content Strategy Framework', 'Merchandising Strategy'],
+        'consulting': ['Content Strategy Framework', 'Brand Development Process', 'Client Presentation Framework'],
+        'education': ['Content Strategy Framework', 'Instructional Design (ADDIE)', 'Learning Objectives Framework'],
+        'marketing': ['Brand Development Process', 'Content Strategy Framework', 'Customer Journey Mapping', 'Creative Brief Framework']
+      },
+      'researcher': {
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Cyber Threat Intelligence', 'Compliance Frameworks (SOC 2, ISO 27001)'],
+        'finance': ['Financial Ratio Analysis', 'Market Research Framework', 'Risk Assessment'],
+        'healthcare': ['Evidence-Based Medicine', 'Health Technology Assessment', 'Healthcare Analytics'],
+        'technology': ['System Architecture Design', 'Performance Optimization', 'Agile Framework'],
+        'manufacturing': ['Root Cause Analysis', 'Performance Measurement', 'Quality Assurance'],
+        'legal': ['Legal Research Methodology', 'Case Law Analysis', 'Regulatory Analysis'],
+        'retail': ['Market Research Framework', 'Customer Segmentation', 'Market Analysis'],
+        'consulting': ['Market Research Framework', 'Data-Driven Decision Making', 'Performance Measurement'],
+        'education': ['Learning Analytics', 'Assessment and Evaluation', 'Educational Technology Integration'],
+        'marketing': ['Market Research Framework', 'Customer Journey Mapping', 'A/B Testing Methodology']
+      },
+      'assistant': {
+        'cybersecurity': ['Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Process Mapping'],
+        'finance': ['Process Mapping', 'Performance Measurement', 'Risk Assessment'],
+        'healthcare': ['Process Mapping', 'Regulatory Compliance Framework', 'Quality Assurance'],
+        'technology': ['Agile Framework', 'Process Mapping', 'Project Management'],
+        'manufacturing': ['Process Mapping', 'Quality Assurance', 'Safety Management System'],
+        'legal': ['Process Mapping', 'Compliance Framework', 'Document Management'],
+        'retail': ['Process Mapping', 'Customer Experience Framework', 'Inventory Management'],
+        'consulting': ['Process Mapping', 'Project Management', 'Stakeholder Analysis'],
+        'education': ['Process Mapping', 'Assessment and Evaluation', 'Administrative Systems'],
+        'marketing': ['Process Mapping', 'Customer Journey Mapping', 'Campaign Management']
+      },
+      'product-manager': {
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Agile Framework', 'Customer Journey Mapping'],
+        'finance': ['Agile Framework', 'Customer Journey Mapping', 'Market Research Framework'],
+        'healthcare': ['Agile Framework', 'Customer Journey Mapping', 'Regulatory Compliance Framework'],
+        'technology': ['Agile Framework', 'User Experience (UX) Design', 'Customer Journey Mapping'],
+        'manufacturing': ['Agile Framework', 'Customer Journey Mapping', 'Quality Assurance'],
+        'legal': ['Agile Framework', 'Customer Journey Mapping', 'Compliance Framework'],
+        'retail': ['Customer Journey Mapping', 'Merchandising Strategy', 'Customer Experience Framework'],
+        'consulting': ['Agile Framework', 'Customer Journey Mapping', 'Strategic Planning'],
+        'education': ['Agile Framework', 'Customer Journey Mapping', 'Learning Objectives Framework'],
+        'marketing': ['Customer Journey Mapping', 'Market Research Framework', 'A/B Testing Methodology']
+      },
+      'ux-designer': {
+        'cybersecurity': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Design Thinking'],
+        'finance': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Design Thinking'],
+        'healthcare': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Patient Safety Framework'],
+        'technology': ['User Experience (UX) Design', 'Design Thinking', 'Agile Framework'],
+        'manufacturing': ['User Experience (UX) Design', 'Design Thinking', 'Customer Experience Framework'],
+        'legal': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Design Thinking'],
+        'retail': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Customer Experience Framework'],
+        'consulting': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Design Thinking'],
+        'education': ['User Experience (UX) Design', 'Learning Objectives Framework', 'Student Engagement Strategies'],
+        'marketing': ['User Experience (UX) Design', 'Customer Journey Mapping', 'Brand Development Process']
+      },
+      'project-manager': {
+        'cybersecurity': ['Project Management (PMI)', 'Risk Assessment Matrix (Cyber)', 'Compliance Frameworks (SOC 2, ISO 27001)'],
+        'finance': ['Project Management (PMI)', 'Risk Assessment', 'Strategic Planning'],
+        'healthcare': ['Project Management (PMI)', 'Quality Improvement (PDSA)', 'Regulatory Compliance Framework'],
+        'technology': ['Agile Framework', 'DevOps Methodology', 'Project Management (PMI)'],
+        'manufacturing': ['Project Management (PMI)', 'Quality Assurance', 'Process Improvement'],
+        'legal': ['Project Management (PMI)', 'Compliance Framework', 'Risk Assessment (Legal)'],
+        'retail': ['Project Management (PMI)', 'Customer Experience Framework', 'Inventory Management'],
+        'consulting': ['Project Management (PMI)', 'Change Management', 'Stakeholder Analysis'],
+        'education': ['Project Management (PMI)', 'Educational Technology Integration', 'Assessment and Evaluation'],
+        'marketing': ['Project Management (PMI)', 'Customer Journey Mapping', 'Campaign Strategy']
+      },
+      'customer-success': {
+        'cybersecurity': ['Customer Journey Mapping', 'Security Awareness Training', 'Performance Measurement'],
+        'finance': ['Customer Journey Mapping', 'Performance Measurement', 'Risk Assessment'],
+        'healthcare': ['Customer Journey Mapping', 'Customer Experience Framework', 'Quality Improvement (PDSA)'],
+        'technology': ['Customer Journey Mapping', 'Agile Framework', 'User Experience (UX) Design'],
+        'manufacturing': ['Customer Journey Mapping', 'Customer Experience Framework', 'Quality Assurance'],
+        'legal': ['Customer Journey Mapping', 'Client Interview Techniques', 'Performance Measurement'],
+        'retail': ['Customer Journey Mapping', 'Customer Experience Framework', 'Customer Segmentation'],
+        'consulting': ['Customer Journey Mapping', 'Client Engagement Framework', 'Performance Measurement'],
+        'education': ['Customer Journey Mapping', 'Student Engagement Strategies', 'Assessment and Evaluation'],
+        'marketing': ['Customer Journey Mapping', 'Customer Segmentation', 'Customer Lifetime Value (CLV)']
+      },
+      'investment-advisor': {
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Performance Measurement'],
+        'finance': ['Financial Ratio Analysis', 'DCF Valuation', 'Risk Assessment', 'Technical Analysis'],
+        'healthcare': ['Risk Assessment', 'Performance Measurement', 'Regulatory Compliance Framework'],
+        'technology': ['Risk Assessment', 'Performance Measurement', 'Market Analysis'],
+        'manufacturing': ['Risk Assessment', 'Performance Measurement', 'Market Analysis'],
+        'legal': ['Risk Assessment (Legal)', 'Compliance Framework', 'Performance Measurement'],
+        'retail': ['Market Analysis', 'Performance Measurement', 'Risk Assessment'],
+        'consulting': ['Risk Assessment', 'Performance Measurement', 'Strategic Planning'],
+        'education': ['Risk Assessment', 'Performance Measurement', 'Market Analysis'],
+        'marketing': ['Market Analysis', 'Performance Measurement', 'Customer Segmentation']
+      },
+      'therapist': {
+        'cybersecurity': ['Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Risk Assessment Matrix (Cyber)'],
+        'finance': ['Risk Assessment', 'Performance Measurement', 'Regulatory Compliance Framework'],
+        'healthcare': ['Clinical Practice Guidelines', 'Evidence-Based Medicine', 'Patient Safety Framework'],
+        'technology': ['Performance Measurement', 'Risk Assessment', 'Compliance Framework'],
+        'manufacturing': ['Safety Management System', 'Performance Measurement', 'Risk Assessment'],
+        'legal': ['Ethical Guidelines Framework', 'Compliance Framework', 'Risk Assessment (Legal)'],
+        'retail': ['Customer Experience Framework', 'Performance Measurement', 'Risk Assessment'],
+        'consulting': ['Performance Measurement', 'Risk Assessment', 'Stakeholder Analysis'],
+        'education': ['Assessment and Evaluation', 'Learning Objectives Framework', 'Student Engagement Strategies'],
+        'marketing': ['Customer Journey Mapping', 'Performance Measurement', 'Customer Segmentation']
+      },
+      'compliance-officer': {
+        'cybersecurity': ['NIST Cybersecurity Framework', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Risk Assessment Matrix (Cyber)'],
+        'finance': ['Regulatory Compliance Framework', 'Risk Assessment', 'Compliance Framework'],
+        'healthcare': ['Regulatory Compliance Framework', 'Clinical Practice Guidelines', 'Patient Safety Framework'],
+        'technology': ['Compliance Framework', 'Security Framework (OWASP)', 'Risk Assessment'],
+        'manufacturing': ['Safety Management System', 'Regulatory Compliance Framework', 'Quality Assurance'],
+        'legal': ['Compliance Framework', 'Regulatory Analysis', 'Legal Research Methodology'],
+        'retail': ['Regulatory Compliance Framework', 'Customer Experience Framework', 'Risk Assessment'],
+        'consulting': ['Compliance Framework', 'Risk Assessment', 'Regulatory Analysis'],
+        'education': ['Regulatory Compliance Framework', 'Assessment and Evaluation', 'Compliance Framework'],
+        'marketing': ['Regulatory Compliance Framework', 'Customer Segmentation', 'Risk Assessment']
+      },
+      'qa-specialist': {
+        'cybersecurity': ['Security Controls Framework', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Risk Assessment Matrix (Cyber)'],
+        'finance': ['Quality Assurance', 'Risk Assessment', 'Regulatory Compliance Framework'],
+        'healthcare': ['Quality Improvement (PDSA)', 'Patient Safety Framework', 'Clinical Practice Guidelines'],
+        'technology': ['Testing Pyramid', 'Quality Assurance', 'Agile Framework'],
+        'manufacturing': ['Total Quality Management (TQM)', 'Statistical Process Control', 'Six Sigma'],
+        'legal': ['Quality Assurance', 'Compliance Framework', 'Legal Research Methodology'],
+        'retail': ['Quality Assurance', 'Customer Experience Framework', 'Performance Metrics'],
+        'consulting': ['Quality Assurance', 'Performance Measurement', 'Best Practices Framework'],
+        'education': ['Assessment and Evaluation', 'Quality Assurance', 'Learning Objectives Framework'],
+        'marketing': ['Quality Assurance', 'A/B Testing Methodology', 'Performance Metrics']
+      },
+      'technical-writer': {
+        'cybersecurity': ['Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Documentation Framework'],
+        'finance': ['Documentation Framework', 'Regulatory Compliance Framework', 'Process Mapping'],
+        'healthcare': ['Clinical Practice Guidelines', 'Regulatory Compliance Framework', 'Documentation Framework'],
+        'technology': ['API Design Patterns', 'System Architecture Design', 'Agile Framework'],
+        'manufacturing': ['Documentation Framework', 'Safety Management System', 'Process Mapping'],
+        'legal': ['Legal Research Methodology', 'Documentation Framework', 'Compliance Framework'],
+        'retail': ['Documentation Framework', 'Process Mapping', 'Customer Experience Framework'],
+        'consulting': ['Documentation Framework', 'Best Practices Framework', 'Process Mapping'],
+        'education': ['Instructional Design (ADDIE)', 'Learning Objectives Framework', 'Documentation Framework'],
+        'marketing': ['Content Strategy Framework', 'Documentation Framework', 'Brand Development Process']
+      },
+      'innovation-catalyst': {
+        'cybersecurity': ['Innovation Framework', 'Risk Assessment Matrix (Cyber)', 'Technology Assessment'],
+        'finance': ['Innovation Framework', 'Market Research Framework', 'Technology Assessment'],
+        'healthcare': ['Innovation Framework', 'Health Technology Assessment', 'Technology Assessment'],
+        'technology': ['Innovation Framework', 'Agile Framework', 'Design Thinking'],
+        'manufacturing': ['Innovation Framework', 'Lean Manufacturing', 'Technology Assessment'],
+        'legal': ['Innovation Framework', 'Technology Assessment', 'Strategic Planning'],
+        'retail': ['Innovation Framework', 'Customer Experience Framework', 'Technology Assessment'],
+        'consulting': ['Innovation Framework', 'Strategic Planning', 'Technology Assessment'],
+        'education': ['Innovation Framework', 'Educational Technology Integration', 'Technology Assessment'],
+        'marketing': ['Innovation Framework', 'Market Research Framework', 'Brand Development Process']
       }
     }
 
-    // Define broadly technical frameworks that should be excluded for non-technical roles
-    const highlyTechnicalFrameworks = [
-      'NIST Cybersecurity Framework', 'OWASP Top 10', 'Threat Modeling',
-      'Incident Response Framework', 'Penetration Testing Methodology',
-      'Security Controls Framework', 'Vulnerability Management',
-      'Cyber Threat Intelligence', 'DevOps Methodology', 'API Design Patterns',
-      'System Architecture Design', 'Security Framework (OWASP)', 'Testing Pyramid',
-      'Continuous Integration', 'Black-Scholes Model', 'Monte Carlo Simulation',
-      'Capital Asset Pricing Model', 'Economic Value Added', 'DCF Valuation',
-      'Six Sigma', 'Lean Manufacturing', 'Statistical Process Control',
-      'Clinical Decision Support', 'Evidence-Based Medicine', 'Actuarial Analysis',
-      'Blockchain Analysis', 'Smart Contract Auditing', 'DeFi Protocol Assessment'
-    ]
+    return whitelist[agentType]?.[industry] || []
+  }
 
-    // Business-focused roles should exclude most technical frameworks
-    const businessRoles = ['consultant', 'coach', 'sales-rep', 'hr-specialist', 'customer-success', 'teacher', 'creator']
-    
-    if (businessRoles.includes(agentType)) {
-      return highlyTechnicalFrameworks.includes(framework)
+  // Check if a framework should be excluded for a specific agent type
+  const isFrameworkExcludedForAgent = (framework: string, agentType: string): boolean => {
+    // Always allow frameworks from the agent's own specialty
+    const agentFrameworks = AGENT_TYPE_FRAMEWORK_PREFERENCES[agentType as keyof typeof AGENT_TYPE_FRAMEWORK_PREFERENCES] || []
+    if (agentFrameworks.includes(framework)) {
+      return false
     }
 
-    // Technical roles get fewer exclusions
+    // For industry frameworks, check against whitelist
+    if (formData.industry) {
+      const allowedIndustryFrameworks = getWhitelistedIndustryFrameworks(agentType, formData.industry)
+      const allIndustryFrameworks = INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || []
+      
+      // If this framework is from the selected industry, only allow it if it's whitelisted
+      if (allIndustryFrameworks.includes(framework)) {
+        return !allowedIndustryFrameworks.includes(framework)
+      }
+    }
+
+    // Default: don't exclude frameworks not covered by the above logic
     return false
   }
 
