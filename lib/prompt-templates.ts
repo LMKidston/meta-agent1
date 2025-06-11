@@ -70,6 +70,8 @@ ${domainFrameworks.map(framework => `- ${framework}`).join('\n')}
 - **Structure**: ${responseStructure || 'Structured report with clear sections'}
 - **Recommendation Style**: ${recommendationStyle || 'Clear recommendations with supporting reasoning'}
 - **Include Examples**: ${includeExamples ? 'Yes - provide relevant examples and case studies' : 'No - focus on direct answers'}
+${agentType && AGENT_TYPE_RECOMMENDATION_PATTERNS[agentType as keyof typeof AGENT_TYPE_RECOMMENDATION_PATTERNS] ? `
+- **Agent-Specific Format**: ${AGENT_TYPE_RECOMMENDATION_PATTERNS[agentType as keyof typeof AGENT_TYPE_RECOMMENDATION_PATTERNS].format}` : ''}
 
 ## Specific Instructions
 1. Always maintain your role as a ${agentType} expert in ${industry}
@@ -743,4 +745,88 @@ export const INDUSTRY_RECOMMENDATION_STYLES = {
     { value: 'compensation-strategy', label: 'Compensation and benefits optimization' },
     { value: 'organizational-development', label: 'Organizational development and change strategies' }
   ]
+}
+
+// Agent-type-specific recommendation patterns
+export const AGENT_TYPE_RECOMMENDATION_PATTERNS = {
+  consultant: {
+    format: 'Strategic recommendations with implementation roadmaps',
+    style: ['strategic-analysis', 'implementation-roadmap', 'stakeholder-alignment', 'change-management', 'roi-assessment']
+  },
+  teacher: {
+    format: 'Educational guidance with learning objectives',
+    style: ['step-by-step-instruction', 'learning-objectives', 'assessment-criteria', 'differentiated-approaches', 'progress-tracking']
+  },
+  assistant: {
+    format: 'Task-oriented recommendations with clear action items',
+    style: ['action-items', 'prioritized-tasks', 'resource-lists', 'time-management', 'workflow-optimization']
+  },
+  analyst: {
+    format: 'Data-driven insights with supporting evidence',
+    style: ['data-analysis', 'trend-identification', 'statistical-insights', 'comparative-analysis', 'forecasting']
+  },
+  creator: {
+    format: 'Creative solutions with ideation and iteration',
+    style: ['creative-concepts', 'iterative-refinement', 'inspiration-sources', 'content-strategy', 'brand-alignment']
+  },
+  developer: {
+    format: 'Technical solutions with code examples and best practices',
+    style: ['technical-implementation', 'code-examples', 'best-practices', 'architecture-guidance', 'troubleshooting-steps']
+  },
+  researcher: {
+    format: 'Evidence-based findings with methodology and sources',
+    style: ['research-methodology', 'evidence-synthesis', 'source-validation', 'hypothesis-testing', 'literature-review']
+  },
+  coach: {
+    format: 'Motivational guidance with goal-setting and accountability',
+    style: ['goal-setting', 'motivational-strategies', 'accountability-measures', 'skill-development', 'progress-milestones']
+  },
+  'product-manager': {
+    format: 'Product strategy with user-focused prioritization',
+    style: ['feature-prioritization', 'user-story-mapping', 'roadmap-planning', 'stakeholder-alignment', 'metrics-tracking']
+  },
+  'ux-designer': {
+    format: 'User-centered design recommendations with prototyping',
+    style: ['user-research-insights', 'design-solutions', 'prototype-recommendations', 'usability-improvements', 'accessibility-guidelines']
+  },
+  'project-manager': {
+    format: 'Project execution plans with timeline and resource allocation',
+    style: ['project-planning', 'timeline-management', 'resource-allocation', 'risk-mitigation', 'stakeholder-communication']
+  },
+  'sales-rep': {
+    format: 'Sales strategies with relationship-building focus',
+    style: ['lead-qualification', 'relationship-building', 'objection-handling', 'closing-strategies', 'follow-up-plans']
+  },
+  'hr-specialist': {
+    format: 'People-focused strategies with policy guidance',
+    style: ['talent-development', 'policy-recommendations', 'culture-building', 'compliance-guidance', 'employee-relations']
+  },
+  'customer-success': {
+    format: 'Customer retention strategies with satisfaction metrics',
+    style: ['customer-onboarding', 'retention-strategies', 'satisfaction-improvement', 'expansion-opportunities', 'churn-prevention']
+  },
+  'investment-advisor': {
+    format: 'Investment recommendations with risk analysis',
+    style: ['portfolio-allocation', 'risk-assessment', 'investment-thesis', 'diversification-strategy', 'performance-monitoring']
+  },
+  therapist: {
+    format: 'Therapeutic guidance with evidence-based approaches',
+    style: ['therapeutic-interventions', 'coping-strategies', 'treatment-planning', 'progress-assessment', 'resource-referrals']
+  },
+  'compliance-officer': {
+    format: 'Regulatory guidance with compliance frameworks',
+    style: ['regulatory-compliance', 'risk-assessment', 'policy-development', 'audit-preparation', 'training-recommendations']
+  },
+  'qa-specialist': {
+    format: 'Quality assurance protocols with testing strategies',
+    style: ['testing-strategies', 'quality-metrics', 'process-improvement', 'defect-prevention', 'standards-compliance']
+  },
+  'technical-writer': {
+    format: 'Documentation strategies with user-focused content',
+    style: ['content-strategy', 'user-documentation', 'information-architecture', 'writing-guidelines', 'review-processes']
+  },
+  'innovation-catalyst': {
+    format: 'Innovation frameworks with creative problem-solving',
+    style: ['innovation-methodology', 'creative-ideation', 'prototype-development', 'market-validation', 'scaling-strategies']
+  }
 }

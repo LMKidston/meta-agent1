@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/types/form-data'
-import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES } from '@/lib/prompt-templates'
+import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS } from '@/lib/prompt-templates'
 import { Copy, Check } from 'lucide-react'
 
 const initialFormData: FormData = {
@@ -84,10 +84,35 @@ export default function MetaAgentForm() {
     return INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || INDUSTRY_FRAMEWORKS.general
   }
 
-  // Get industry-specific recommendation styles
-  const getIndustryRecommendationStyles = () => {
-    if (!formData.industry) return INDUSTRY_RECOMMENDATION_STYLES.general
-    return INDUSTRY_RECOMMENDATION_STYLES[formData.industry as keyof typeof INDUSTRY_RECOMMENDATION_STYLES] || INDUSTRY_RECOMMENDATION_STYLES.general
+  // Get combined agent type + industry recommendation styles
+  const getCombinedRecommendationStyles = () => {
+    const industryStyles = formData.industry 
+      ? INDUSTRY_RECOMMENDATION_STYLES[formData.industry as keyof typeof INDUSTRY_RECOMMENDATION_STYLES] || INDUSTRY_RECOMMENDATION_STYLES.general
+      : INDUSTRY_RECOMMENDATION_STYLES.general
+
+    const agentTypePattern = formData.agentType 
+      ? AGENT_TYPE_RECOMMENDATION_PATTERNS[formData.agentType as keyof typeof AGENT_TYPE_RECOMMENDATION_PATTERNS]
+      : null
+
+    // If we have both agent type and industry, combine them intelligently
+    if (agentTypePattern && formData.industry) {
+      // Create agent-type-aware versions of industry recommendations
+      return industryStyles.map(style => ({
+        ...style,
+        label: `${style.label} (${agentTypePattern.format.split(' with ')[0]})`
+      }))
+    }
+
+    // If we only have agent type, create generic recommendations with agent type flavor
+    if (agentTypePattern && !formData.industry) {
+      return agentTypePattern.style.map((style, index) => ({
+        value: style,
+        label: style.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+      }))
+    }
+
+    // Default to industry styles
+    return industryStyles
   }
 
   return (
@@ -109,7 +134,12 @@ export default function MetaAgentForm() {
                     name="agentType"
                     value={type.value}
                     checked={formData.agentType === type.value}
-                    onChange={(e) => setFormData(prev => ({ ...prev, agentType: e.target.value }))}
+                    onChange={(e) => setFormData(prev => ({ 
+                      ...prev, 
+                      agentType: e.target.value,
+                      // Clear recommendation style when agent type changes
+                      recommendationStyle: ''
+                    }))}
                     className="mt-1"
                   />
                   <div>
@@ -130,7 +160,7 @@ export default function MetaAgentForm() {
               onChange={(e) => setFormData(prev => ({ 
                 ...prev, 
                 industry: e.target.value,
-                // Clear framework selections when industry changes
+                // Clear framework and recommendation selections when industry changes
                 domainFrameworks: [],
                 recommendationStyle: ''
               }))}
@@ -512,14 +542,19 @@ export default function MetaAgentForm() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
               How should your agent make recommendations?
-              {formData.industry && (
+              {(formData.industry || formData.agentType) && (
                 <span className="text-sm text-blue-600 block mt-1">
-                  Showing {formData.industry} industry recommendation styles
+                  {formData.agentType && formData.industry 
+                    ? `Showing ${formData.agentType} recommendations for ${formData.industry}`
+                    : formData.agentType 
+                      ? `Showing ${formData.agentType} recommendation patterns`
+                      : `Showing ${formData.industry} industry recommendations`
+                  }
                 </span>
               )}
             </label>
             <div className="space-y-2">
-              {getIndustryRecommendationStyles().map((option) => (
+              {getCombinedRecommendationStyles().map((option) => (
                 <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                   <input
                     type="radio"
