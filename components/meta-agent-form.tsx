@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/types/form-data'
-import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS } from '@/lib/prompt-templates'
+import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS, AGENT_TYPE_FRAMEWORK_PREFERENCES } from '@/lib/prompt-templates'
 import { Copy, Check } from 'lucide-react'
 
 const initialFormData: FormData = {
@@ -78,10 +78,51 @@ export default function MetaAgentForm() {
     })
   }
 
-  // Get industry-specific frameworks
-  const getIndustryFrameworks = () => {
-    if (!formData.industry) return []
-    return INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || INDUSTRY_FRAMEWORKS.general
+  // Get intelligently filtered frameworks based on both agent type and industry
+  const getFilteredFrameworks = () => {
+    const industryFrameworks = formData.industry 
+      ? INDUSTRY_FRAMEWORKS[formData.industry as keyof typeof INDUSTRY_FRAMEWORKS] || INDUSTRY_FRAMEWORKS.general
+      : INDUSTRY_FRAMEWORKS.general
+
+    const agentTypeFrameworks = formData.agentType 
+      ? AGENT_TYPE_FRAMEWORK_PREFERENCES[formData.agentType as keyof typeof AGENT_TYPE_FRAMEWORK_PREFERENCES] || []
+      : []
+
+    // If we have both agent type and industry, show intersection + most relevant
+    if (formData.agentType && formData.industry) {
+      // Find frameworks that appear in both lists (intersection)
+      const intersection = industryFrameworks.filter(framework => 
+        agentTypeFrameworks.some(agentFramework => 
+          framework.toLowerCase().includes(agentFramework.toLowerCase()) ||
+          agentFramework.toLowerCase().includes(framework.toLowerCase()) ||
+          framework === agentFramework
+        )
+      )
+
+      // Add agent-specific frameworks that are relevant to any industry
+      const agentSpecificRelevant = agentTypeFrameworks.filter(framework => 
+        ['Analysis', 'Framework', 'Management', 'Planning', 'Assessment', 'Strategy', 'Process'].some(keyword =>
+          framework.includes(keyword)
+        )
+      )
+
+      // Combine and deduplicate
+      const combined = [...new Set([...intersection, ...agentSpecificRelevant, ...industryFrameworks.slice(0, 8)])]
+      return combined.slice(0, 12) // Limit to 12 most relevant
+    }
+
+    // If we only have agent type, show agent-specific frameworks
+    if (formData.agentType && !formData.industry) {
+      return agentTypeFrameworks
+    }
+
+    // If we only have industry, show industry frameworks
+    if (!formData.agentType && formData.industry) {
+      return industryFrameworks
+    }
+
+    // Default: show general frameworks
+    return INDUSTRY_FRAMEWORKS.general
   }
 
   // Get combined agent type + industry recommendation styles
@@ -387,15 +428,20 @@ export default function MetaAgentForm() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
               What frameworks or methodologies should your agent use? (Select all that apply)
-              {formData.industry && (
+              {(formData.agentType || formData.industry) && (
                 <span className="text-sm text-blue-600 block mt-1">
-                  Showing {formData.industry} industry frameworks
+                  {formData.agentType && formData.industry 
+                    ? `Showing frameworks for ${formData.agentType} in ${formData.industry}`
+                    : formData.agentType 
+                      ? `Showing ${formData.agentType} preferred frameworks`
+                      : `Showing ${formData.industry} industry frameworks`
+                  }
                 </span>
               )}
             </label>
-            {getIndustryFrameworks().length > 0 ? (
+            {getFilteredFrameworks().length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {getIndustryFrameworks().map((framework) => (
+                {getFilteredFrameworks().map((framework) => (
                   <label key={framework} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                     <input
                       type="checkbox"
@@ -408,7 +454,7 @@ export default function MetaAgentForm() {
               </div>
             ) : (
               <div className="text-gray-500 italic p-4 bg-gray-50 rounded">
-                Please select an industry above to see relevant frameworks and methodologies.
+                Please select an agent type and/or industry above to see relevant frameworks and methodologies.
               </div>
             )}
           </div>

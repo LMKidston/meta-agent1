@@ -830,3 +830,87 @@ export const AGENT_TYPE_RECOMMENDATION_PATTERNS = {
     style: ['innovation-methodology', 'creative-ideation', 'prototype-development', 'market-validation', 'scaling-strategies']
   }
 }
+
+// Agent-type framework preferences (what frameworks each agent type typically uses)
+export const AGENT_TYPE_FRAMEWORK_PREFERENCES = {
+  consultant: [
+    'SWOT Analysis', 'Strategic Planning', 'Stakeholder Analysis', 'Change Management', 
+    'Business Case Development', 'Implementation Planning', 'Performance Measurement', 'Problem-Solving Framework'
+  ],
+  teacher: [
+    'Bloom\'s Taxonomy', 'Learning Objectives Framework', 'Instructional Design (ADDIE)', 
+    'Assessment and Evaluation', 'Differentiated Instruction', 'Universal Design for Learning (UDL)'
+  ],
+  assistant: [
+    'Project Management', 'Process Mapping', 'Workflow Optimization', 'Time Management',
+    'Quality Assurance', 'Best Practices Framework', 'Resource Management'
+  ],
+  analyst: [
+    'Data Analysis', 'Statistical Process Control', 'Performance Metrics', 'Trend Analysis',
+    'Comparative Analysis', 'Root Cause Analysis', 'Risk Assessment', 'Forecasting'
+  ],
+  creator: [
+    'Design Thinking', 'Creative Brief Framework', 'Content Strategy Framework', 
+    'Brand Development Process', 'Creative Project Management', 'User Experience (UX) Design'
+  ],
+  developer: [
+    'Agile Framework', 'DevOps Methodology', 'System Architecture Design', 'API Design Patterns',
+    'Security Framework (OWASP)', 'Code Review Process', 'Testing Pyramid'
+  ],
+  researcher: [
+    'Research Methodology', 'Evidence-Based Medicine', 'Literature Review', 'Data Analysis',
+    'Statistical Analysis', 'Hypothesis Testing', 'Study Design'
+  ],
+  coach: [
+    'Goal Setting Framework', 'Performance Management System', 'Learning and Development',
+    'Motivational Strategies', 'Skills Assessment', 'Progress Tracking'
+  ],
+  'product-manager': [
+    'User Story Mapping', 'Product Roadmap Planning', 'Feature Prioritization', 'Agile Framework',
+    'Market Research Framework', 'A/B Testing Methodology', 'Customer Journey Mapping'
+  ],
+  'ux-designer': [
+    'Design Thinking', 'User Experience (UX) Design', 'User Research', 'Information Architecture',
+    'Usability Testing', 'Accessibility Standards', 'Design Systems'
+  ],
+  'project-manager': [
+    'Project Management (PMI)', 'Agile Framework', 'Risk Management', 'Resource Planning',
+    'Timeline Management', 'Stakeholder Management', 'Quality Management'
+  ],
+  'sales-rep': [
+    'Customer Relationship Management', 'Sales Process Framework', 'Lead Qualification',
+    'Customer Segmentation', 'Market Analysis', 'Competitive Analysis'
+  ],
+  'hr-specialist': [
+    'Talent Acquisition Framework', 'Performance Management System', 'Employee Engagement',
+    'Learning and Development', 'Compensation Framework', 'Diversity and Inclusion'
+  ],
+  'customer-success': [
+    'Customer Journey Mapping', 'Customer Satisfaction Measurement', 'Retention Strategies',
+    'Customer Segmentation', 'Customer Lifecycle Management', 'Customer Health Scoring'
+  ],
+  'investment-advisor': [
+    'Portfolio Analysis', 'Risk Assessment Matrix', 'Financial Ratio Analysis', 'Asset Allocation',
+    'Investment Strategy', 'Performance Measurement', 'Market Analysis'
+  ],
+  therapist: [
+    'Clinical Practice Guidelines', 'Evidence-Based Medicine', 'Treatment Planning',
+    'Assessment Frameworks', 'Therapeutic Interventions', 'Progress Monitoring'
+  ],
+  'compliance-officer': [
+    'Regulatory Compliance Framework', 'Risk Assessment', 'Audit Framework',
+    'Policy Development', 'Training Framework', 'Monitoring and Reporting'
+  ],
+  'qa-specialist': [
+    'Quality Management Systems', 'Testing Frameworks', 'Quality Metrics',
+    'Process Improvement', 'Standards Compliance', 'Defect Management'
+  ],
+  'technical-writer': [
+    'Information Architecture', 'Documentation Framework', 'Content Strategy',
+    'User-Centered Design', 'Style Guides', 'Review Processes'
+  ],
+  'innovation-catalyst': [
+    'Innovation Framework', 'Design Thinking', 'Lean Innovation', 'Prototype Development',
+    'Market Validation', 'Technology Assessment', 'Innovation Metrics'
+  ]
+}
