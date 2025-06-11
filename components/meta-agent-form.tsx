@@ -67,13 +67,16 @@ export default function MetaAgentForm() {
     }))
   }
 
-  const handleArrayToggle = (field: keyof Pick<FormData, 'domainFrameworks' | 'keyMetrics' | 'industryFocus' | 'methodologies'>, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: (prev[field] as string[]).includes(value)
-        ? (prev[field] as string[]).filter(item => item !== value)
-        : [...(prev[field] as string[]), value]
-    }))
+  const handleArrayToggle = (field: string, value: string) => {
+    setFormData(prev => {
+      const currentArray = (prev as any)[field] as string[]
+      return {
+        ...prev,
+        [field]: currentArray.includes(value)
+          ? currentArray.filter(item => item !== value)
+          : [...currentArray, value]
+      }
+    })
   }
 
   return (
