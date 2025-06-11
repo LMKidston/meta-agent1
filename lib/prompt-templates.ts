@@ -100,7 +100,23 @@ export const AGENT_TYPES = [
   { value: 'creator', label: 'Content Creator', description: 'Creates written content and copy' },
   { value: 'developer', label: 'Developer Helper', description: 'Assists with coding and technical problems' },
   { value: 'researcher', label: 'Researcher', description: 'Finds and synthesizes information' },
-  { value: 'coach', label: 'Coach/Mentor', description: 'Provides guidance and motivation' }
+  { value: 'coach', label: 'Coach/Mentor', description: 'Provides guidance and motivation' },
+  
+  // New Modern Professional Roles
+  { value: 'product-manager', label: 'Product Manager', description: 'Guides product development and strategy' },
+  { value: 'ux-designer', label: 'UX/UI Designer', description: 'Designs user experiences and interfaces' },
+  { value: 'project-manager', label: 'Project Manager', description: 'Manages projects and coordinates teams' },
+  { value: 'sales-rep', label: 'Sales Representative', description: 'Helps with sales processes and customer relationships' },
+  { value: 'hr-specialist', label: 'HR Specialist', description: 'Assists with human resources and people management' },
+  { value: 'customer-success', label: 'Customer Success Manager', description: 'Focuses on customer retention and satisfaction' },
+  
+  // New Specialized Expertise
+  { value: 'investment-advisor', label: 'Investment Advisor', description: 'Provides investment and portfolio guidance' },
+  { value: 'therapist', label: 'Therapist/Counselor', description: 'Offers mental health and wellness support' },
+  { value: 'compliance-officer', label: 'Compliance Officer', description: 'Ensures regulatory adherence' },
+  { value: 'qa-specialist', label: 'Quality Assurance Specialist', description: 'Focuses on quality control and testing' },
+  { value: 'technical-writer', label: 'Technical Writer', description: 'Creates documentation and technical content' },
+  { value: 'innovation-catalyst', label: 'Innovation Catalyst', description: 'Drives creative problem-solving and innovation' }
 ]
 
 export const INDUSTRIES = [
@@ -114,6 +130,28 @@ export const INDUSTRIES = [
   { value: 'manufacturing', label: 'Manufacturing' },
   { value: 'consulting', label: 'Consulting' },
   { value: 'creative', label: 'Creative Arts' },
+  
+  // New High-Growth Sectors
+  { value: 'real-estate', label: 'Real Estate' },
+  { value: 'insurance', label: 'Insurance' },
+  { value: 'hospitality', label: 'Hospitality & Tourism' },
+  { value: 'agriculture', label: 'Agriculture & Food' },
+  { value: 'energy', label: 'Energy & Utilities' },
+  { value: 'transportation', label: 'Transportation & Logistics' },
+  
+  // New Emerging/Specialized Fields
+  { value: 'cybersecurity', label: 'Cybersecurity' },
+  { value: 'sustainability', label: 'Sustainability & ESG' },
+  { value: 'cryptocurrency', label: 'Cryptocurrency & Blockchain' },
+  { value: 'gaming', label: 'Gaming & Entertainment' },
+  { value: 'nonprofit', label: 'Non-Profit & Social Impact' },
+  { value: 'government', label: 'Government & Public Sector' },
+  
+  // New Professional Services
+  { value: 'architecture', label: 'Architecture & Construction' },
+  { value: 'accounting', label: 'Accounting & Auditing' },
+  { value: 'human-resources', label: 'Human Resources' },
+  
   { value: 'general', label: 'General Purpose' }
 ]
 
@@ -272,6 +310,234 @@ export const INDUSTRY_FRAMEWORKS = {
     'Performance Metrics',
     'Strategic Planning',
     'Project Management'
+  ],
+  
+  // New High-Growth Sectors
+  'real-estate': [
+    'Comparative Market Analysis (CMA)',
+    'Cap Rate Analysis',
+    'Net Operating Income (NOI)',
+    'Cash-on-Cash Return',
+    'Property Valuation Methods',
+    'Market Trend Analysis',
+    'Due Diligence Framework',
+    'Investment Property Analysis',
+    'Rental Yield Calculation',
+    'Market Absorption Rates',
+    'Zoning and Land Use Analysis',
+    'Real Estate Investment Trust (REIT) Analysis'
+  ],
+  
+  insurance: [
+    'Risk Assessment Framework',
+    'Actuarial Analysis',
+    'Underwriting Guidelines',
+    'Claims Management Process',
+    'Catastrophe Modeling',
+    'Premium Calculation Methods',
+    'Reinsurance Strategy',
+    'Loss Reserving Techniques',
+    'Regulatory Compliance (Solvency II)',
+    'Customer Lifetime Value (Insurance)',
+    'Fraud Detection Framework',
+    'Policy Portfolio Analysis'
+  ],
+  
+  hospitality: [
+    'Revenue Management',
+    'Guest Experience Journey',
+    'Yield Management',
+    'Service Quality Framework (SERVQUAL)',
+    'Hotel Performance Metrics (RevPAR, ADR)',
+    'Customer Satisfaction Measurement',
+    'Seasonal Demand Planning',
+    'Event Management Framework',
+    'Food & Beverage Cost Control',
+    'Staff Training and Development',
+    'Tourism Market Analysis',
+    'Sustainability in Tourism'
+  ],
+  
+  agriculture: [
+    'Crop Yield Optimization',
+    'Soil Health Assessment',
+    'Integrated Pest Management (IPM)',
+    'Precision Agriculture',
+    'Supply Chain Management (Farm-to-Table)',
+    'Weather Risk Management',
+    'Sustainable Farming Practices',
+    'Food Safety Standards (HACCP)',
+    'Agricultural Economics',
+    'Livestock Management',
+    'Water Resource Management',
+    'Organic Certification Process'
+  ],
+  
+  energy: [
+    'Energy Efficiency Analysis',
+    'Renewable Energy Assessment',
+    'Grid Management Systems',
+    'Power Purchase Agreements (PPAs)',
+    'Energy Storage Solutions',
+    'Load Forecasting',
+    'Carbon Footprint Analysis',
+    'Regulatory Compliance (Energy)',
+    'Smart Grid Technology',
+    'Energy Trading and Risk Management',
+    'Utility Performance Metrics',
+    'Environmental Impact Assessment'
+  ],
+  
+  transportation: [
+    'Supply Chain Optimization',
+    'Route Planning and Optimization',
+    'Logistics Performance Metrics',
+    'Fleet Management',
+    'Inventory Management (3PL)',
+    'Warehouse Management Systems',
+    'Transportation Cost Analysis',
+    'Last-Mile Delivery Solutions',
+    'Freight Consolidation',
+    'Cross-Docking Operations',
+    'Cold Chain Management',
+    'Sustainability in Logistics'
+  ],
+  
+  // New Emerging/Specialized Fields
+  cybersecurity: [
+    'NIST Cybersecurity Framework',
+    'OWASP Top 10',
+    'Threat Modeling',
+    'Risk Assessment Matrix (Cyber)',
+    'Incident Response Framework',
+    'Penetration Testing Methodology',
+    'Security Controls Framework',
+    'Vulnerability Management',
+    'Identity and Access Management (IAM)',
+    'Security Awareness Training',
+    'Compliance Frameworks (SOC 2, ISO 27001)',
+    'Cyber Threat Intelligence'
+  ],
+  
+  sustainability: [
+    'Life Cycle Assessment (LCA)',
+    'ESG Reporting Standards',
+    'Carbon Footprint Analysis',
+    'Sustainability Metrics Framework',
+    'Circular Economy Principles',
+    'Environmental Management Systems',
+    'Social Impact Assessment',
+    'Green Building Standards (LEED)',
+    'Sustainable Supply Chain',
+    'Climate Risk Assessment',
+    'Biodiversity Impact Assessment',
+    'Stakeholder Engagement Framework'
+  ],
+  
+  cryptocurrency: [
+    'Blockchain Analysis',
+    'DeFi Protocol Assessment',
+    'Smart Contract Auditing',
+    'Tokenomics Framework',
+    'Cryptocurrency Valuation Models',
+    'Risk Management (Crypto)',
+    'Regulatory Compliance (Crypto)',
+    'Trading Strategy Framework',
+    'Wallet Security Best Practices',
+    'Market Analysis (Technical/Fundamental)',
+    'Liquidity Pool Analysis',
+    'NFT Valuation Framework'
+  ],
+  
+  gaming: [
+    'Game Design Framework',
+    'Player Experience (PX) Design',
+    'Monetization Strategy',
+    'Game Analytics and Metrics',
+    'Community Management',
+    'Live Operations Framework',
+    'Game Testing and QA',
+    'Player Engagement Models',
+    'Game Economy Design',
+    'Platform Integration',
+    'Content Creation Pipeline',
+    'Entertainment Industry Analysis'
+  ],
+  
+  nonprofit: [
+    'Impact Measurement Framework',
+    'Fundraising Strategy',
+    'Grant Writing Process',
+    'Volunteer Management',
+    'Program Evaluation',
+    'Stakeholder Engagement',
+    'Social Return on Investment (SROI)',
+    'Community Needs Assessment',
+    'Advocacy Campaign Framework',
+    'Donor Relationship Management',
+    'Board Governance',
+    'Mission Alignment Assessment'
+  ],
+  
+  government: [
+    'Policy Analysis Framework',
+    'Public Administration',
+    'Regulatory Impact Assessment',
+    'Stakeholder Consultation Process',
+    'Government Performance Management',
+    'Public Finance Management',
+    'Legislative Process',
+    'Public Service Delivery',
+    'Crisis Management',
+    'Intergovernmental Relations',
+    'Public Engagement Strategies',
+    'Evidence-Based Policy Making'
+  ],
+  
+  // New Professional Services
+  architecture: [
+    'Design Process Framework',
+    'Building Information Modeling (BIM)',
+    'Project Management (Construction)',
+    'Sustainability Design (Green Building)',
+    'Site Analysis and Planning',
+    'Building Code Compliance',
+    'Cost Estimation and Budgeting',
+    'Construction Administration',
+    'Historic Preservation',
+    'Accessibility Standards (ADA)',
+    'Value Engineering',
+    'Risk Management (Construction)'
+  ],
+  
+  accounting: [
+    'Generally Accepted Accounting Principles (GAAP)',
+    'International Financial Reporting Standards (IFRS)',
+    'Audit Planning and Execution',
+    'Tax Planning and Compliance',
+    'Financial Statement Analysis',
+    'Internal Controls Assessment',
+    'Forensic Accounting',
+    'Management Accounting',
+    'Budgeting and Forecasting',
+    'Cost Accounting',
+    'Risk Assessment (Financial)',
+    'Regulatory Compliance (Financial)'
+  ],
+  
+  'human-resources': [
+    'Talent Acquisition Framework',
+    'Performance Management System',
+    'Employee Engagement Strategies',
+    'Compensation and Benefits',
+    'Learning and Development',
+    'Succession Planning',
+    'HR Analytics and Metrics',
+    'Employee Relations',
+    'Diversity, Equity, and Inclusion (DEI)',
+    'Change Management (HR)',
+    'Workforce Planning',
+    'Employment Law Compliance'
   ]
 }
 
@@ -353,5 +619,128 @@ export const INDUSTRY_RECOMMENDATION_STYLES = {
     { value: 'pros-cons', label: 'Pros and cons analysis' },
     { value: 'step-by-step', label: 'Step-by-step implementation guide' },
     { value: 'conditional', label: 'Conditional recommendations based on scenarios' }
+  ],
+  
+  // New High-Growth Sectors
+  'real-estate': [
+    { value: 'investment-analysis', label: 'Investment analysis with ROI projections' },
+    { value: 'market-comparison', label: 'Comparative market analysis recommendations' },
+    { value: 'property-valuation', label: 'Property valuation with pricing strategy' },
+    { value: 'location-assessment', label: 'Location and market timing recommendations' },
+    { value: 'portfolio-strategy', label: 'Real estate portfolio optimization' }
+  ],
+  
+  insurance: [
+    { value: 'risk-rating', label: 'Risk assessment and rating recommendations' },
+    { value: 'coverage-analysis', label: 'Coverage gap analysis and solutions' },
+    { value: 'premium-optimization', label: 'Premium pricing and optimization' },
+    { value: 'claims-strategy', label: 'Claims management and prevention strategies' },
+    { value: 'policy-recommendations', label: 'Policy design and underwriting recommendations' }
+  ],
+  
+  hospitality: [
+    { value: 'revenue-optimization', label: 'Revenue management and pricing strategies' },
+    { value: 'guest-experience', label: 'Guest experience improvement recommendations' },
+    { value: 'operational-efficiency', label: 'Operational efficiency and cost management' },
+    { value: 'marketing-strategy', label: 'Marketing and customer acquisition strategies' },
+    { value: 'service-quality', label: 'Service quality enhancement recommendations' }
+  ],
+  
+  agriculture: [
+    { value: 'crop-optimization', label: 'Crop yield and farming practice optimization' },
+    { value: 'sustainability-practices', label: 'Sustainable farming recommendations' },
+    { value: 'resource-management', label: 'Resource allocation and efficiency strategies' },
+    { value: 'market-strategy', label: 'Market positioning and pricing strategies' },
+    { value: 'risk-mitigation', label: 'Weather and market risk mitigation plans' }
+  ],
+  
+  energy: [
+    { value: 'efficiency-improvements', label: 'Energy efficiency improvement strategies' },
+    { value: 'renewable-transition', label: 'Renewable energy transition plans' },
+    { value: 'grid-optimization', label: 'Grid management and optimization recommendations' },
+    { value: 'cost-reduction', label: 'Energy cost reduction strategies' },
+    { value: 'sustainability-goals', label: 'Sustainability and carbon reduction plans' }
+  ],
+  
+  transportation: [
+    { value: 'route-optimization', label: 'Route and logistics optimization strategies' },
+    { value: 'cost-efficiency', label: 'Transportation cost reduction recommendations' },
+    { value: 'supply-chain', label: 'Supply chain improvement strategies' },
+    { value: 'technology-integration', label: 'Technology adoption and integration plans' },
+    { value: 'sustainability-logistics', label: 'Sustainable logistics recommendations' }
+  ],
+  
+  // New Emerging/Specialized Fields
+  cybersecurity: [
+    { value: 'security-assessment', label: 'Security posture assessment and recommendations' },
+    { value: 'threat-response', label: 'Threat response and mitigation strategies' },
+    { value: 'compliance-roadmap', label: 'Compliance and regulatory roadmaps' },
+    { value: 'risk-prioritization', label: 'Security risk prioritization and remediation' },
+    { value: 'security-architecture', label: 'Security architecture and controls recommendations' }
+  ],
+  
+  sustainability: [
+    { value: 'impact-reduction', label: 'Environmental impact reduction strategies' },
+    { value: 'esg-improvement', label: 'ESG performance improvement recommendations' },
+    { value: 'carbon-neutrality', label: 'Carbon neutrality and net-zero roadmaps' },
+    { value: 'circular-economy', label: 'Circular economy implementation strategies' },
+    { value: 'sustainability-reporting', label: 'Sustainability reporting and disclosure recommendations' }
+  ],
+  
+  cryptocurrency: [
+    { value: 'investment-strategy', label: 'Crypto investment and portfolio strategies' },
+    { value: 'risk-management', label: 'Risk management and security recommendations' },
+    { value: 'defi-strategies', label: 'DeFi protocol and yield farming strategies' },
+    { value: 'trading-signals', label: 'Trading signals and market analysis' },
+    { value: 'compliance-guidance', label: 'Regulatory compliance and tax guidance' }
+  ],
+  
+  gaming: [
+    { value: 'game-design', label: 'Game design and mechanics recommendations' },
+    { value: 'monetization-strategy', label: 'Monetization and revenue optimization' },
+    { value: 'player-engagement', label: 'Player engagement and retention strategies' },
+    { value: 'content-strategy', label: 'Content creation and update strategies' },
+    { value: 'community-building', label: 'Community building and management recommendations' }
+  ],
+  
+  nonprofit: [
+    { value: 'impact-maximization', label: 'Impact measurement and maximization strategies' },
+    { value: 'fundraising-strategy', label: 'Fundraising and donor engagement strategies' },
+    { value: 'program-optimization', label: 'Program effectiveness and optimization recommendations' },
+    { value: 'volunteer-engagement', label: 'Volunteer recruitment and engagement strategies' },
+    { value: 'sustainability-planning', label: 'Organizational sustainability and growth plans' }
+  ],
+  
+  government: [
+    { value: 'policy-recommendations', label: 'Evidence-based policy recommendations' },
+    { value: 'stakeholder-engagement', label: 'Stakeholder consultation and engagement strategies' },
+    { value: 'service-improvement', label: 'Public service delivery improvements' },
+    { value: 'regulatory-guidance', label: 'Regulatory framework and compliance guidance' },
+    { value: 'performance-optimization', label: 'Government performance and efficiency recommendations' }
+  ],
+  
+  // New Professional Services
+  architecture: [
+    { value: 'design-solutions', label: 'Design solutions and architectural recommendations' },
+    { value: 'sustainability-design', label: 'Sustainable and green building strategies' },
+    { value: 'project-optimization', label: 'Project timeline and cost optimization' },
+    { value: 'compliance-guidance', label: 'Building code and regulatory compliance' },
+    { value: 'technology-integration', label: 'Technology and BIM integration recommendations' }
+  ],
+  
+  accounting: [
+    { value: 'financial-analysis', label: 'Financial analysis and performance recommendations' },
+    { value: 'compliance-guidance', label: 'Regulatory compliance and audit recommendations' },
+    { value: 'tax-optimization', label: 'Tax planning and optimization strategies' },
+    { value: 'process-improvement', label: 'Accounting process and controls improvements' },
+    { value: 'reporting-enhancement', label: 'Financial reporting and disclosure recommendations' }
+  ],
+  
+  'human-resources': [
+    { value: 'talent-strategy', label: 'Talent acquisition and retention strategies' },
+    { value: 'performance-improvement', label: 'Performance management and development plans' },
+    { value: 'engagement-enhancement', label: 'Employee engagement and culture recommendations' },
+    { value: 'compensation-strategy', label: 'Compensation and benefits optimization' },
+    { value: 'organizational-development', label: 'Organizational development and change strategies' }
   ]
 }
