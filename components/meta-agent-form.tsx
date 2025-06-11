@@ -21,7 +21,20 @@ const initialFormData: FormData = {
   creativityLevel: 5,
   responseStructure: '',
   includeExamples: true,
-  formatStyle: ''
+  formatStyle: '',
+  // New Enhanced Fields
+  domainFrameworks: [],
+  analysisDepth: '',
+  dataRequirements: '',
+  handlesUncertainty: '',
+  followUpStyle: '',
+  riskTolerance: '',
+  keyMetrics: [],
+  industryFocus: [],
+  methodologies: [],
+  reportStructure: '',
+  decisionFramework: '',
+  recommendationStyle: ''
 }
 
 export default function MetaAgentForm() {
@@ -51,6 +64,15 @@ export default function MetaAgentForm() {
       specificTasks: prev.specificTasks.includes(task)
         ? prev.specificTasks.filter(t => t !== task)
         : [...prev.specificTasks, task]
+    }))
+  }
+
+  const handleArrayToggle = (field: keyof Pick<FormData, 'domainFrameworks' | 'keyMetrics' | 'industryFocus' | 'methodologies'>, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: (prev[field] as string[]).includes(value)
+        ? (prev[field] as string[]).filter(item => item !== value)
+        : [...(prev[field] as string[]), value]
     }))
   }
 
@@ -226,7 +248,299 @@ export default function MetaAgentForm() {
           </div>
         </section>
 
-        {/* Submit Button */}
+        {/* Expertise Level */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-900">Expertise Level & Audience</h2>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Who is your target audience?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'beginners', label: 'Beginners - Little to no experience' },
+                { value: 'intermediate', label: 'Intermediate - Some experience' },
+                { value: 'advanced', label: 'Advanced - Experienced users' },
+                { value: 'experts', label: 'Experts - Professional level' },
+                { value: 'mixed', label: 'Mixed - Adapt to user level' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="targetAudience"
+                    value={option.value}
+                    checked={formData.targetAudience === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, targetAudience: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              What level of technical depth should your agent provide?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'basic', label: 'Basic - Simple explanations' },
+                { value: 'intermediate', label: 'Intermediate - Some technical detail' },
+                { value: 'advanced', label: 'Advanced - Technical depth with metrics' },
+                { value: 'expert', label: 'Expert - Assume professional knowledge' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="technicalDepth"
+                    value={option.value}
+                    checked={formData.technicalDepth === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, technicalDepth: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              How should your agent explain concepts?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'step-by-step', label: 'Step-by-step breakdowns' },
+                { value: 'analogies', label: 'Using analogies and examples' },
+                { value: 'data-driven', label: 'Data-driven with evidence' },
+                { value: 'framework-based', label: 'Using established frameworks' },
+                { value: 'conversational', label: 'Conversational explanations' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="explanationStyle"
+                    value={option.value}
+                    checked={formData.explanationStyle === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, explanationStyle: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Domain Expertise */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-900">Domain Expertise & Frameworks</h2>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              What frameworks or methodologies should your agent use? (Select all that apply)
+            </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {[
+                'SWOT Analysis',
+                'Porter\'s Five Forces',
+                'Financial Ratio Analysis',
+                'DCF Valuation',
+                'Risk Assessment Matrix',
+                'Competitor Analysis',
+                'Market Research Framework',
+                'Decision Trees',
+                'Cost-Benefit Analysis',
+                'PESTLE Analysis',
+                'Balanced Scorecard',
+                'Lean Canvas'
+              ].map((framework) => (
+                <label key={framework} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.domainFrameworks.includes(framework)}
+                    onChange={() => handleArrayToggle('domainFrameworks', framework)}
+                  />
+                  <span>{framework}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              How deep should the analysis be?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'surface', label: 'Surface-level overview' },
+                { value: 'moderate', label: 'Moderate depth with key insights' },
+                { value: 'comprehensive', label: 'Comprehensive deep-dive analysis' },
+                { value: 'exhaustive', label: 'Exhaustive analysis with all factors' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="analysisDepth"
+                    value={option.value}
+                    checked={formData.analysisDepth === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, analysisDepth: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Behavior & Decision Making */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-900">Behavior & Decision Making</h2>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              How proactive should your agent be? ({formData.proactiveness}/10)
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={formData.proactiveness}
+              onChange={(e) => setFormData(prev => ({ ...prev, proactiveness: parseInt(e.target.value) }))}
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Reactive only</span>
+              <span>Highly proactive</span>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Should your agent ask clarifying questions?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: true, label: 'Yes - Ask questions to better understand needs' },
+                { value: false, label: 'No - Work with information provided' }
+              ].map((option) => (
+                <label key={String(option.value)} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="askQuestions"
+                    checked={formData.askQuestions === option.value}
+                    onChange={() => setFormData(prev => ({ ...prev, askQuestions: option.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              How should your agent handle uncertainty?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'acknowledge', label: 'Acknowledge limitations and provide best estimate' },
+                { value: 'research', label: 'Request more information before proceeding' },
+                { value: 'scenario', label: 'Provide multiple scenarios or options' },
+                { value: 'conservative', label: 'Take conservative approach when uncertain' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="handlesUncertainty"
+                    value={option.value}
+                    checked={formData.handlesUncertainty === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, handlesUncertainty: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Output Format & Structure */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-900">Output Format & Structure</h2>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              What structure should responses follow?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'executive-summary', label: 'Executive Summary + Details' },
+                { value: 'structured-report', label: 'Structured Report with Sections' },
+                { value: 'bullet-points', label: 'Bullet Points with Key Insights' },
+                { value: 'narrative', label: 'Narrative Flow' },
+                { value: 'comparison-table', label: 'Comparison Tables/Charts' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="responseStructure"
+                    value={option.value}
+                    checked={formData.responseStructure === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, responseStructure: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              How should your agent make recommendations?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: 'clear-directive', label: 'Clear directives (Buy/Sell/Hold)' },
+                { value: 'ranked-options', label: 'Ranked options with reasoning' },
+                { value: 'pros-cons', label: 'Pros and cons analysis' },
+                { value: 'risk-weighted', label: 'Risk-weighted recommendations' },
+                { value: 'conditional', label: 'Conditional recommendations based on scenarios' }
+              ].map((option) => (
+                <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="recommendationStyle"
+                    value={option.value}
+                    checked={formData.recommendationStyle === option.value}
+                    onChange={(e) => setFormData(prev => ({ ...prev, recommendationStyle: e.target.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Should responses include examples?
+            </label>
+            <div className="space-y-2">
+              {[
+                { value: true, label: 'Yes - Include relevant examples and case studies' },
+                { value: false, label: 'No - Focus on direct answers only' }
+              ].map((option) => (
+                <label key={String(option.value)} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                  <input
+                    type="radio"
+                    name="includeExamples"
+                    checked={formData.includeExamples === option.value}
+                    onChange={() => setFormData(prev => ({ ...prev, includeExamples: option.value }))}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Submit Button */
         <div className="flex justify-center">
           <button
             type="submit"
