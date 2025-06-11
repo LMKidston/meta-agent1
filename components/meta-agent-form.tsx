@@ -22,7 +22,6 @@ const initialFormData: FormData = {
   responseStructure: '',
   includeExamples: true,
   formatStyle: '',
-  // New Enhanced Fields
   domainFrameworks: [],
   analysisDepth: '',
   dataRequirements: '',
@@ -543,7 +542,7 @@ export default function MetaAgentForm() {
           </div>
         </section>
 
-        {/* Submit Button */
+        {/* Submit Button */}
         <div className="flex justify-center">
           <button
             type="submit"
