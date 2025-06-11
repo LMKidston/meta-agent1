@@ -14,6 +14,30 @@ export default function Home() {
           </p>
         </div>
         <MetaAgentForm />
+        
+        {/* Footer */}
+        <footer className="mt-16 text-center text-gray-500 text-sm">
+          <p>
+            Built with{' '}
+            <a 
+              href="https://claude.ai/code" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-700 underline"
+            >
+              Claude Code
+            </a>
+            {' '}by{' '}
+            <a 
+              href="https://github.com/LMKidston" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-700 underline"
+            >
+              Lilian Kidston
+            </a>
+          </p>
+        </footer>
       </div>
     </main>
   )
