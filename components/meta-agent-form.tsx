@@ -126,35 +126,48 @@ export default function MetaAgentForm() {
     return INDUSTRY_FRAMEWORKS.general
   }
 
-  // Get combined agent type + industry recommendation styles
+  // Get agent-first recommendation styles (prioritize agent type over industry)
   const getCombinedRecommendationStyles = () => {
-    const industryStyles = formData.industry 
-      ? INDUSTRY_RECOMMENDATION_STYLES[formData.industry as keyof typeof INDUSTRY_RECOMMENDATION_STYLES] || INDUSTRY_RECOMMENDATION_STYLES.general
-      : INDUSTRY_RECOMMENDATION_STYLES.general
-
     const agentTypePattern = formData.agentType 
       ? AGENT_TYPE_RECOMMENDATION_PATTERNS[formData.agentType as keyof typeof AGENT_TYPE_RECOMMENDATION_PATTERNS]
       : null
 
-    // If we have both agent type and industry, combine them intelligently
+    const industryStyles = formData.industry 
+      ? INDUSTRY_RECOMMENDATION_STYLES[formData.industry as keyof typeof INDUSTRY_RECOMMENDATION_STYLES] || INDUSTRY_RECOMMENDATION_STYLES.general
+      : INDUSTRY_RECOMMENDATION_STYLES.general
+
+    // Priority 1: Agent type with industry context
     if (agentTypePattern && formData.industry) {
-      // Create agent-type-aware versions of industry recommendations
-      return industryStyles.map(style => ({
-        ...style,
-        label: `${style.label} (${agentTypePattern.format.split(' with ')[0]})`
+      // Create agent-type-first recommendations with industry flavor
+      const agentBasedRecs = agentTypePattern.style.map(style => ({
+        value: style,
+        label: `${style.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} (${formData.industry} context)`
       }))
+
+      // Add a few industry-specific recommendations that make sense for this agent type
+      const compatibleIndustryRecs = industryStyles.slice(0, 2).map(style => ({
+        ...style,
+        label: `${style.label} (${agentTypePattern.format.split(' ')[0]} approach)`
+      }))
+
+      return [...agentBasedRecs, ...compatibleIndustryRecs]
     }
 
-    // If we only have agent type, create generic recommendations with agent type flavor
+    // Priority 2: Agent type only (no industry selected)
     if (agentTypePattern && !formData.industry) {
-      return agentTypePattern.style.map((style, index) => ({
+      return agentTypePattern.style.map(style => ({
         value: style,
         label: style.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
       }))
     }
 
-    // Default to industry styles
-    return industryStyles
+    // Priority 3: Industry only (no agent type selected)
+    if (!agentTypePattern && formData.industry) {
+      return industryStyles
+    }
+
+    // Default: General recommendations
+    return INDUSTRY_RECOMMENDATION_STYLES.general
   }
 
   // Get agent-specific depth concept
@@ -666,10 +679,10 @@ export default function MetaAgentForm() {
               {(formData.industry || formData.agentType) && (
                 <span className="text-sm text-blue-600 block mt-1">
                   {formData.agentType && formData.industry 
-                    ? `Showing ${formData.agentType} recommendations for ${formData.industry}`
+                    ? `${formData.agentType} recommendation style with ${formData.industry} context`
                     : formData.agentType 
-                      ? `Showing ${formData.agentType} recommendation patterns`
-                      : `Showing ${formData.industry} industry recommendations`
+                      ? `${formData.agentType} recommendation patterns`
+                      : `${formData.industry} industry recommendations`
                   }
                 </span>
               )}
