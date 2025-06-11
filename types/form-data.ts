@@ -1,3 +1,13 @@
+/**
+ * TypeScript Interfaces for Meta Agent Creator
+ * 
+ * Defines the structure for form data and related types
+ * used throughout the application.
+ * 
+ * @author Lilian Kidston
+ * @version 1.0.0
+ */
+
 export interface FormData {
   // Agent Purpose & Domain
   agentType: string

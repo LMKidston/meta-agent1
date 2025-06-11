@@ -1,3 +1,14 @@
+/**
+ * Meta Agent Form Component
+ * 
+ * A comprehensive form component for creating custom AI agent prompts.
+ * Features dynamic framework filtering, agent-specific questionnaires,
+ * and intelligent prompt generation.
+ * 
+ * @author Lilian Kidston
+ * @version 1.0.0
+ */
+
 'use client'
 
 import { useState } from 'react'

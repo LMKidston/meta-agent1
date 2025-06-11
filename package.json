@@ -1,13 +1,32 @@
 {
   "name": "meta-agent-creator",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "A sophisticated AI agent prompt generation platform built with Next.js 14 and TypeScript",
+  "author": "Lilian Kidston",
+  "license": "MIT",
+  "homepage": "https://meta-agent1.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LMKidston/meta-agent1.git"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "prompt",
+    "nextjs",
+    "typescript",
+    "claude",
+    "chatgpt",
+    "form-builder"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .next out",
+    "preview": "npm run build && npm run start"
   },
   "dependencies": {
     "next": "14.0.0",

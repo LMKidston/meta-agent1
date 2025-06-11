@@ -1,3 +1,13 @@
+/**
+ * Prompt Templates and Agent Configuration System
+ * 
+ * Centralized system for managing AI agent types, industry frameworks,
+ * and intelligent prompt generation with dynamic filtering.
+ * 
+ * @author Lilian Kidston
+ * @version 1.0.0
+ */
+
 import { FormData } from '@/types/form-data'
 
 export function generatePrompt(formData: FormData): string {
