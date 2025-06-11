@@ -107,7 +107,8 @@ export default function MetaAgentForm() {
       )
 
       // Combine and deduplicate
-      const combined = [...new Set([...intersection, ...agentSpecificRelevant, ...industryFrameworks.slice(0, 8)])]
+      const allFrameworks = [...intersection, ...agentSpecificRelevant, ...industryFrameworks.slice(0, 8)]
+      const combined = Array.from(new Set(allFrameworks))
       return combined.slice(0, 12) // Limit to 12 most relevant
     }
 
