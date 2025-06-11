@@ -568,19 +568,24 @@ export default function MetaAgentForm() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 space-y-8">
+    <div className="max-w-5xl mx-auto">
+      <form onSubmit={handleSubmit} className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 md:p-12 space-y-10">
         {/* Agent Purpose & Domain */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-900">Agent Purpose & Domain</h2>
+        <section className="space-y-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">1</span>
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Agent Purpose & Domain</h2>
+          </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-semibold text-slate-700 mb-4">
               What type of agent do you want to create?
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {AGENT_TYPES.map((type) => (
-                <label key={type.value} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label key={type.value} className="group flex items-start space-x-3 p-4 border border-slate-200 rounded-xl hover:border-blue-300 hover:bg-blue-50/50 cursor-pointer transition-all duration-200 hover:shadow-sm">
                   <input
                     type="radio"
                     name="agentType"
@@ -592,11 +597,11 @@ export default function MetaAgentForm() {
                       // Clear recommendation style when agent type changes
                       recommendationStyle: ''
                     }))}
-                    className="mt-1"
+                    className="mt-1 w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500 focus:ring-2"
                   />
                   <div>
-                    <div className="font-medium">{type.label}</div>
-                    <div className="text-sm text-gray-500">{type.description}</div>
+                    <div className="font-semibold text-slate-800 group-hover:text-blue-900 transition-colors">{type.label}</div>
+                    <div className="text-sm text-slate-500 mt-1">{type.description}</div>
                   </div>
                 </label>
               ))}
@@ -604,7 +609,7 @@ export default function MetaAgentForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-semibold text-slate-700 mb-4">
               What industry or field will it serve?
             </label>
             <select
@@ -616,7 +621,7 @@ export default function MetaAgentForm() {
                 domainFrameworks: [],
                 recommendationStyle: ''
               }))}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white/80 backdrop-blur-sm transition-all duration-200 hover:border-blue-300"
             >
               <option value="">Select an industry</option>
               {INDUSTRIES.map((industry) => (
@@ -643,7 +648,7 @@ export default function MetaAgentForm() {
                 : formData.agentType === 'teacher' ? "e.g., Help students master calculus concepts, Improve writing skills, Prepare for certification exams..."
                 : formData.agentType === 'product-manager' ? "e.g., Increase user engagement by 25%, Launch 3 major features per quarter, Improve product-market fit..."
                 : "e.g., Help users learn programming concepts, Provide business strategy advice, Assist with creative writing..."}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white/80 backdrop-blur-sm transition-all duration-200 hover:border-blue-300 resize-none"
               rows={3}
             />
           </div>
@@ -673,8 +678,13 @@ export default function MetaAgentForm() {
         </section>
 
         {/* Communication Style */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-900">Communication Style</h2>
+        <section className="space-y-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">2</span>
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Communication Style</h2>
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -755,8 +765,13 @@ export default function MetaAgentForm() {
         </section>
 
         {/* Expertise Level */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-900">Expertise Level & Audience</h2>
+        <section className="space-y-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-violet-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">3</span>
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Expertise Level & Audience</h2>
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -836,8 +851,13 @@ export default function MetaAgentForm() {
         </section>
 
         {/* Domain Expertise */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-900">Domain Expertise & Frameworks</h2>
+        <section className="space-y-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">4</span>
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Domain Expertise & Frameworks</h2>
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -900,8 +920,13 @@ export default function MetaAgentForm() {
         </section>
 
         {/* Behavior & Decision Making */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-900">Behavior & Decision Making</h2>
+        <section className="space-y-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">5</span>
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Behavior & Decision Making</h2>
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -970,8 +995,13 @@ export default function MetaAgentForm() {
         </section>
 
         {/* Output Format & Structure */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-900">Output Format & Structure</h2>
+        <section className="space-y-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">6</span>
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Output Format & Structure</h2>
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -1053,34 +1083,68 @@ export default function MetaAgentForm() {
         </section>
 
         {/* Submit Button */}
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-8">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200"
+            className="group relative bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 px-10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300/50"
           >
-            Generate My AI Agent Prompt
+            <span className="relative z-10 flex items-center space-x-2">
+              <span>Generate My AI Agent Prompt</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
           </button>
         </div>
       </form>
 
       {/* Generated Prompt */}
       {generatedPrompt && (
-        <div className="mt-8 bg-white rounded-lg shadow-lg p-8">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-semibold text-gray-900">Your AI Agent Prompt</h3>
+        <div className="mt-12 bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 md:p-12 animate-in slide-in-from-bottom duration-500">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Your AI Agent Prompt</h3>
+            </div>
             <button
               onClick={copyToClipboard}
-              className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md transition duration-200"
+              className="group flex items-center space-x-2 bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 px-6 py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              <span>{copied ? 'Copied!' : 'Copy'}</span>
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 text-green-600" />
+                  <span className="font-medium text-green-700">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-slate-600 group-hover:text-slate-700" />
+                  <span className="font-medium text-slate-600 group-hover:text-slate-700">Copy Prompt</span>
+                </>
+              )}
             </button>
           </div>
-          <pre className="bg-gray-50 p-4 rounded-md overflow-x-auto text-sm whitespace-pre-wrap">
-            {generatedPrompt}
-          </pre>
-          <div className="mt-4 text-sm text-gray-600">
-            <p><strong>How to use:</strong> Copy this prompt and paste it into ChatGPT, Claude, You.com, or any AI chat platform to activate your custom agent.</p>
+          <div className="bg-slate-50/50 backdrop-blur-sm rounded-2xl border border-slate-200/50 overflow-hidden">
+            <pre className="p-6 overflow-x-auto text-sm text-slate-700 whitespace-pre-wrap leading-relaxed font-mono">
+              {generatedPrompt}
+            </pre>
+          </div>
+          <div className="mt-6 p-4 bg-blue-50/50 rounded-xl border border-blue-200/50">
+            <div className="flex items-start space-x-3">
+              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-blue-900 mb-1">How to Use Your Agent</p>
+                <p className="text-sm text-blue-700">Copy this prompt and paste it into ChatGPT, Claude, You.com, or any AI platform to activate your custom agent with all the specified configurations.</p>
+              </div>
+            </div>
           </div>
         </div>
       )}
