@@ -64,7 +64,7 @@ export default function MetaAgentForm() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
-      console.error('Failed to copy text: ', err)
+      // Failed to copy text - silently handle error
     }
   }
 
@@ -558,11 +558,11 @@ export default function MetaAgentForm() {
     return agentQuestions?.targetAudience || {
       label: "Who is your target audience?",
       options: [
+        { value: 'mixed', label: 'Mixed - Adapt to user level' },
         { value: 'beginners', label: 'Beginners - Little to no experience' },
         { value: 'intermediate', label: 'Intermediate - Some experience' },
         { value: 'advanced', label: 'Advanced - Experienced users' },
-        { value: 'experts', label: 'Experts - Professional level' },
-        { value: 'mixed', label: 'Mixed - Adapt to user level' }
+        { value: 'experts', label: 'Experts - Professional level' }
       ]
     }
   }
@@ -804,6 +804,7 @@ export default function MetaAgentForm() {
             </label>
             <div className="space-y-2">
               {[
+                { value: 'adaptive', label: 'Adaptive - Match user\'s level' },
                 { value: 'basic', label: 'Basic - Simple explanations' },
                 { value: 'intermediate', label: 'Intermediate - Some technical detail' },
                 { value: 'advanced', label: 'Advanced - Technical depth with metrics' },
