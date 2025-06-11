@@ -147,7 +147,7 @@ export default function MetaAgentForm() {
   const getWhitelistedIndustryFrameworks = (agentType: string, industry: string): string[] => {
     const whitelist: Record<string, Record<string, string[]>> = {
       'hr-specialist': {
-        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)'],
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Security Awareness Training'],
         'finance': ['Risk Assessment', 'Regulatory Compliance Framework', 'Performance Measurement'],
         'healthcare': ['Regulatory Compliance Framework', 'Performance Measurement', 'Training Framework'],
         'technology': ['Performance Optimization', 'Agile Framework', 'Project Management'],
