@@ -147,64 +147,64 @@ export default function MetaAgentForm() {
   const getWhitelistedIndustryFrameworks = (agentType: string, industry: string): string[] => {
     const whitelist: Record<string, Record<string, string[]>> = {
       'hr-specialist': {
-        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Security Awareness Training'],
-        'finance': ['Risk Assessment', 'Regulatory Compliance Framework', 'Performance Measurement'],
-        'healthcare': ['Regulatory Compliance Framework', 'Performance Measurement', 'Training Framework'],
-        'technology': ['Performance Optimization', 'Agile Framework', 'Project Management'],
-        'manufacturing': ['Safety Management System', 'Performance Measurement', 'Training Framework'],
-        'legal': ['Compliance Framework', 'Regulatory Analysis', 'Ethical Guidelines Framework'],
-        'retail': ['Customer Experience Framework', 'Performance Metrics', 'Training Framework'],
-        'consulting': ['Performance Measurement', 'Stakeholder Analysis', 'Change Management'],
-        'education': ['Assessment and Evaluation', 'Training Framework', 'Performance Measurement'],
-        'marketing': ['Performance Metrics', 'Customer Segmentation', 'Training Framework']
+        'cybersecurity': [],  // HR consumes security training, doesn't create security frameworks
+        'finance': [],  // HR handles employment compliance, not financial regulations
+        'healthcare': ['Employee Relations'],  // Only people-related healthcare frameworks
+        'technology': [],  // HR uses project management but doesn't implement technical frameworks
+        'manufacturing': ['Safety Management System'],  // Workplace safety is HR domain
+        'legal': ['Compliance Framework', 'Ethical Guidelines Framework'],
+        'retail': ['Performance Metrics'],  // Employee performance, not customer metrics
+        'consulting': ['Performance Measurement', 'Change Management'],
+        'education': ['Assessment and Evaluation'],  // Employee assessment, not student assessment
+        'marketing': []  // HR doesn't implement marketing frameworks
       },
       'sales-rep': {
-        'cybersecurity': ['Security Awareness Training', 'Customer Segmentation', 'Performance Metrics'],
-        'finance': ['Customer Segmentation', 'Performance Measurement', 'Risk Assessment'],
-        'healthcare': ['Customer Experience Framework', 'Performance Measurement', 'Regulatory Compliance Framework'],
-        'technology': ['Customer Journey Mapping', 'Performance Optimization', 'Agile Framework'],
-        'manufacturing': ['Customer Experience Framework', 'Performance Measurement', 'Quality Assurance'],
-        'legal': ['Client Interview Techniques', 'Customer Segmentation', 'Performance Measurement'],
-        'retail': ['Customer Experience Framework', 'Customer Segmentation', 'Performance Metrics'],
-        'consulting': ['Client Engagement Framework', 'Customer Segmentation', 'Performance Measurement'],
-        'education': ['Customer Segmentation', 'Performance Measurement', 'Assessment and Evaluation'],
-        'marketing': ['Customer Journey Mapping', 'Customer Segmentation', 'Performance Metrics']
+        'cybersecurity': [],  // Sales reps receive security training, don't implement it
+        'finance': ['Customer Segmentation'],  // Financial customer segmentation
+        'healthcare': ['Customer Experience Framework'],  // Healthcare customer experience
+        'technology': ['Customer Journey Mapping'],  // Tech customer journeys
+        'manufacturing': ['Customer Experience Framework'],  // Manufacturing customer experience
+        'legal': ['Client Interview Techniques'],  // Legal client techniques applicable to sales
+        'retail': ['Customer Experience Framework', 'Customer Segmentation'],  // Core retail sales
+        'consulting': ['Client Engagement Framework'],  // Consulting client engagement
+        'education': [],  // Sales reps don't implement educational frameworks
+        'marketing': ['Customer Journey Mapping', 'Customer Segmentation']  // Sales-marketing alignment
       },
       'teacher': {
-        'cybersecurity': ['Security Awareness Training', 'Training Framework', 'Compliance Frameworks (SOC 2, ISO 27001)'],
-        'finance': ['Risk Assessment', 'Performance Measurement', 'Regulatory Compliance Framework'],
-        'healthcare': ['Training Framework', 'Performance Measurement', 'Regulatory Compliance Framework'],
-        'technology': ['Agile Framework', 'Performance Optimization', 'Training Framework'],
-        'manufacturing': ['Training Framework', 'Safety Management System', 'Quality Assurance'],
-        'legal': ['Training Framework', 'Compliance Framework', 'Ethical Guidelines Framework'],
-        'retail': ['Training Framework', 'Customer Experience Framework', 'Performance Metrics'],
-        'consulting': ['Training Framework', 'Performance Measurement', 'Change Management'],
-        'education': ['Assessment and Evaluation', 'Training Framework', 'Performance Measurement'],
-        'marketing': ['Training Framework', 'Customer Journey Mapping', 'Performance Metrics']
+        'cybersecurity': [],  // Teachers receive security training, don't create security curricula
+        'finance': [],  // Financial education would use education frameworks, not finance frameworks
+        'healthcare': [],  // Health education would use education frameworks, not clinical frameworks
+        'technology': [],  // Computer science education would use education frameworks, not dev frameworks
+        'manufacturing': [],  // Industrial education would use education frameworks, not manufacturing frameworks
+        'legal': [],  // Legal education would use education frameworks, not legal practice frameworks
+        'retail': [],  // Retail education would use education frameworks, not retail operation frameworks
+        'consulting': [],  // Business education would use education frameworks, not consulting frameworks
+        'education': ['Assessment and Evaluation'],  // Core educational assessment
+        'marketing': []  // Marketing education would use education frameworks, not marketing frameworks
       },
       'coach': {
-        'cybersecurity': ['Security Awareness Training', 'Performance Measurement', 'Training Framework'],
-        'finance': ['Performance Measurement', 'Risk Assessment', 'Strategic Planning'],
-        'healthcare': ['Performance Measurement', 'Training Framework', 'Quality Improvement (PDSA)'],
-        'technology': ['Performance Optimization', 'Agile Framework', 'Performance Measurement'],
-        'manufacturing': ['Performance Measurement', 'Training Framework', 'Quality Assurance'],
-        'legal': ['Performance Measurement', 'Training Framework', 'Ethical Guidelines Framework'],
-        'retail': ['Performance Metrics', 'Customer Experience Framework', 'Training Framework'],
-        'consulting': ['Performance Measurement', 'Change Management', 'Stakeholder Analysis'],
-        'education': ['Performance Measurement', 'Training Framework', 'Assessment and Evaluation'],
-        'marketing': ['Performance Metrics', 'Customer Journey Mapping', 'Training Framework']
+        'cybersecurity': [],  // Coaches help with personal performance, not security implementation
+        'finance': [],  // Financial coaching uses coaching frameworks, not finance frameworks
+        'healthcare': [],  // Health coaching uses coaching frameworks, not clinical frameworks  
+        'technology': [],  // Tech coaching uses coaching frameworks, not development frameworks
+        'manufacturing': [],  // Manufacturing coaching uses coaching frameworks, not production frameworks
+        'legal': [],  // Legal coaching uses coaching frameworks, not legal practice frameworks
+        'retail': [],  // Retail coaching uses coaching frameworks, not retail operation frameworks
+        'consulting': [],  // Business coaching uses coaching frameworks, not consulting frameworks
+        'education': [],  // Educational coaching uses coaching frameworks, not educational frameworks
+        'marketing': []  // Marketing coaching uses coaching frameworks, not marketing frameworks
       },
       'consultant': {
-        'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Security Awareness Training'],
-        'finance': ['SWOT Analysis', 'Risk Assessment', 'Strategic Planning', 'Performance Measurement'],
-        'healthcare': ['Strategic Planning', 'Performance Measurement', 'Quality Improvement (PDSA)', 'Regulatory Compliance Framework'],
-        'technology': ['Agile Framework', 'Performance Optimization', 'Strategic Planning', 'Project Management'],
-        'manufacturing': ['Strategic Planning', 'Performance Measurement', 'Quality Assurance', 'Process Improvement'],
-        'legal': ['Strategic Planning', 'Risk Assessment (Legal)', 'Compliance Framework', 'Stakeholder Analysis'],
-        'retail': ['Strategic Planning', 'Customer Experience Framework', 'Performance Metrics', 'Market Analysis'],
-        'consulting': ['Strategic Planning', 'Stakeholder Analysis', 'Change Management', 'Performance Measurement'],
-        'education': ['Strategic Planning', 'Performance Measurement', 'Assessment and Evaluation', 'Change Management'],
-        'marketing': ['Strategic Planning', 'Customer Journey Mapping', 'Market Research Framework', 'Performance Metrics']
+        'cybersecurity': ['Risk Assessment Matrix (Cyber)'],  // Business risk assessment, not technical implementation
+        'finance': ['SWOT Analysis', 'Risk Assessment', 'Strategic Planning'],  // Business strategy frameworks
+        'healthcare': ['Strategic Planning', 'Quality Improvement (PDSA)'],  // Business improvement, not clinical
+        'technology': ['Strategic Planning'],  // Tech strategy, not development frameworks
+        'manufacturing': ['Strategic Planning', 'Process Improvement'],  // Business process, not production
+        'legal': ['Strategic Planning', 'Risk Assessment (Legal)', 'Stakeholder Analysis'],  // Business legal strategy
+        'retail': ['Strategic Planning', 'Market Analysis'],  // Business strategy frameworks
+        'consulting': ['Strategic Planning', 'Stakeholder Analysis', 'Change Management'],  // Core consulting
+        'education': ['Strategic Planning', 'Change Management'],  // Educational strategy, not teaching
+        'marketing': ['Strategic Planning', 'Market Research Framework']  // Marketing strategy frameworks
       },
       'developer': {
         'cybersecurity': ['NIST Cybersecurity Framework', 'OWASP Top 10', 'Security Controls Framework', 'Threat Modeling'],
@@ -231,16 +231,16 @@ export default function MetaAgentForm() {
         'marketing': ['Customer Journey Mapping', 'A/B Testing Methodology', 'Attribution Modeling', 'Market Research Framework']
       },
       'creator': {
-        'cybersecurity': ['Security Awareness Training', 'Content Strategy Framework', 'Brand Development Process'],
-        'finance': ['Brand Development Process', 'Content Strategy Framework', 'Market Research Framework'],
-        'healthcare': ['Content Strategy Framework', 'Brand Development Process', 'Customer Experience Framework'],
-        'technology': ['User Experience (UX) Design', 'Design Thinking', 'Content Strategy Framework', 'Agile Framework'],
-        'manufacturing': ['Design Thinking', 'Content Strategy Framework', 'Brand Development Process'],
-        'legal': ['Content Strategy Framework', 'Brand Development Process', 'Client Presentation Framework'],
-        'retail': ['Brand Development Process', 'Customer Experience Framework', 'Content Strategy Framework', 'Merchandising Strategy'],
-        'consulting': ['Content Strategy Framework', 'Brand Development Process', 'Client Presentation Framework'],
-        'education': ['Content Strategy Framework', 'Instructional Design (ADDIE)', 'Learning Objectives Framework'],
-        'marketing': ['Brand Development Process', 'Content Strategy Framework', 'Customer Journey Mapping', 'Creative Brief Framework']
+        'cybersecurity': [],  // Creators make content about security, don't implement security training
+        'finance': ['Brand Development Process'],  // Financial brand/content creation
+        'healthcare': ['Content Strategy Framework', 'Brand Development Process'],  // Healthcare content/branding
+        'technology': ['User Experience (UX) Design', 'Design Thinking'],  // Tech design frameworks
+        'manufacturing': ['Design Thinking', 'Brand Development Process'],  // Manufacturing design/branding
+        'legal': ['Content Strategy Framework', 'Brand Development Process'],  // Legal content/branding
+        'retail': ['Brand Development Process', 'Customer Experience Framework'],  // Retail brand/experience design
+        'consulting': ['Content Strategy Framework', 'Brand Development Process'],  // Consulting content/branding
+        'education': ['Content Strategy Framework', 'Instructional Design (ADDIE)'],  // Educational content design
+        'marketing': ['Brand Development Process', 'Content Strategy Framework', 'Creative Brief Framework']  // Core creative marketing
       },
       'researcher': {
         'cybersecurity': ['Risk Assessment Matrix (Cyber)', 'Cyber Threat Intelligence', 'Compliance Frameworks (SOC 2, ISO 27001)'],
@@ -327,16 +327,16 @@ export default function MetaAgentForm() {
         'marketing': ['Market Analysis', 'Performance Measurement', 'Customer Segmentation']
       },
       'therapist': {
-        'cybersecurity': ['Security Awareness Training', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Risk Assessment Matrix (Cyber)'],
-        'finance': ['Risk Assessment', 'Performance Measurement', 'Regulatory Compliance Framework'],
-        'healthcare': ['Clinical Practice Guidelines', 'Evidence-Based Medicine', 'Patient Safety Framework'],
-        'technology': ['Performance Measurement', 'Risk Assessment', 'Compliance Framework'],
-        'manufacturing': ['Safety Management System', 'Performance Measurement', 'Risk Assessment'],
-        'legal': ['Ethical Guidelines Framework', 'Compliance Framework', 'Risk Assessment (Legal)'],
-        'retail': ['Customer Experience Framework', 'Performance Measurement', 'Risk Assessment'],
-        'consulting': ['Performance Measurement', 'Risk Assessment', 'Stakeholder Analysis'],
-        'education': ['Assessment and Evaluation', 'Learning Objectives Framework', 'Student Engagement Strategies'],
-        'marketing': ['Customer Journey Mapping', 'Performance Measurement', 'Customer Segmentation']
+        'cybersecurity': [],  // Therapists receive security training, don't implement security frameworks
+        'finance': [],  // Therapists don't implement financial frameworks
+        'healthcare': ['Clinical Practice Guidelines', 'Evidence-Based Medicine', 'Patient Safety Framework'],  // Core clinical frameworks
+        'technology': [],  // Therapists don't implement tech frameworks
+        'manufacturing': [],  // Therapists don't implement manufacturing frameworks
+        'legal': ['Ethical Guidelines Framework'],  // Clinical ethics are relevant
+        'retail': [],  // Therapists don't implement retail frameworks
+        'consulting': [],  // Therapists don't implement consulting frameworks
+        'education': [],  // Therapists don't implement educational frameworks (that's educational therapy)
+        'marketing': []  // Therapists don't implement marketing frameworks
       },
       'compliance-officer': {
         'cybersecurity': ['NIST Cybersecurity Framework', 'Compliance Frameworks (SOC 2, ISO 27001)', 'Risk Assessment Matrix (Cyber)'],
