@@ -95,6 +95,11 @@ export default function MetaAgentForm() {
 
       // Find industry frameworks that are compatible with this agent type
       const compatibleIndustryFrameworks = industryFrameworks.filter(framework => {
+        // Exclude frameworks that are clearly not relevant to this agent type
+        if (isFrameworkExcludedForAgent(framework, formData.agentType)) {
+          return false
+        }
+        
         // Include industry frameworks that align with agent's work style
         const agentKeywords = getAgentCompatibilityKeywords(formData.agentType)
         
@@ -103,7 +108,7 @@ export default function MetaAgentForm() {
           framework.toLowerCase().includes(keyword.toLowerCase())
         ).length
         
-        // Only include frameworks with at least 1 keyword match
+        // Require at least 1 keyword match AND not be in exclusion list
         return matches > 0
       })
       .sort((a, b) => {
@@ -136,6 +141,149 @@ export default function MetaAgentForm() {
 
     // Default: General frameworks
     return INDUSTRY_FRAMEWORKS.general
+  }
+
+  // Check if a framework should be excluded for a specific agent type
+  const isFrameworkExcludedForAgent = (framework: string, agentType: string): boolean => {
+    // Define technical/specialized frameworks that should be excluded for non-technical roles
+    const technicalFrameworks = [
+      'NIST Cybersecurity Framework', 'OWASP', 'Threat Modeling', 'Penetration Testing',
+      'Incident Response Framework', 'Vulnerability Management', 'Security Controls',
+      'Identity and Access Management (IAM)', 'Cyber Threat Intelligence',
+      'DevOps Methodology', 'API Design Patterns', 'System Architecture Design',
+      'Security Framework (OWASP)', 'Testing Pyramid', 'Continuous Integration',
+      'Technical Analysis', 'Fundamental Analysis', 'Black-Scholes Model',
+      'Monte Carlo Simulation', 'Capital Asset Pricing Model', 'Economic Value Added',
+      'DCF Valuation', 'Statistical Process Control', 'Six Sigma', 'Lean Manufacturing',
+      'Total Quality Management (TQM)', 'Just-in-Time (JIT)', 'Value Stream Mapping',
+      'Overall Equipment Effectiveness', 'Kaizen Framework', 'Safety Management System',
+      'Clinical Decision Support', 'Evidence-Based Medicine', 'Health Technology Assessment',
+      'Clinical Practice Guidelines', 'Risk Stratification', 'Care Pathway Analysis',
+      'Health Economics Evaluation', 'Patient Safety Framework', 'Population Health Management',
+      'Healthcare Analytics', 'Regulatory Compliance Framework', 'Actuarial Analysis',
+      'Underwriting Guidelines', 'Claims Management Process', 'Catastrophe Modeling',
+      'Premium Calculation Methods', 'Reinsurance Strategy', 'Loss Reserving Techniques',
+      'Fraud Detection Framework', 'Policy Portfolio Analysis', 'Blockchain Analysis',
+      'DeFi Protocol Assessment', 'Smart Contract Auditing', 'Tokenomics Framework',
+      'Cryptocurrency Valuation Models', 'Trading Strategy Framework', 'Wallet Security',
+      'Liquidity Pool Analysis', 'NFT Valuation Framework'
+    ]
+
+    const exclusionRules: Record<string, string[]> = {
+      // Business/Strategy focused roles - exclude highly technical frameworks
+      'consultant': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Blockchain') || f.includes('Smart Contract') ||
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial')
+      ),
+      'coach': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Black-Scholes') || f.includes('Monte Carlo') ||
+        f.includes('Six Sigma') || f.includes('Lean Manufacturing') || f.includes('Clinical') ||
+        f.includes('Blockchain') || f.includes('Smart Contract')
+      ),
+      'sales-rep': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('System Architecture') || f.includes('Six Sigma') ||
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Blockchain') || f.includes('Smart Contract')
+      ),
+      'hr-specialist': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Technical Analysis') || f.includes('Black-Scholes') ||
+        f.includes('Monte Carlo') || f.includes('Six Sigma') || f.includes('Clinical') ||
+        f.includes('Healthcare') || f.includes('Actuarial') || f.includes('Blockchain')
+      ),
+      'customer-success': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('System Architecture') || f.includes('Six Sigma') ||
+        f.includes('Clinical') || f.includes('Actuarial') || f.includes('Blockchain') ||
+        f.includes('Smart Contract')
+      ),
+
+      // Education/Training roles - exclude technical and financial frameworks
+      'teacher': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Black-Scholes') || f.includes('Six Sigma') ||
+        f.includes('Actuarial') || f.includes('Claims Management') || f.includes('Blockchain')
+      ),
+
+      // Creative roles - exclude technical, manufacturing, and financial frameworks  
+      'creator': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Six Sigma') || f.includes('Lean Manufacturing') ||
+        f.includes('Black-Scholes') || f.includes('Clinical') || f.includes('Actuarial') ||
+        f.includes('Blockchain')
+      ),
+
+      // Finance-specific roles - exclude non-financial technical frameworks
+      'investment-advisor': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Six Sigma') || f.includes('Clinical') ||
+        f.includes('Healthcare') || f.includes('Lean Manufacturing')
+      ),
+
+      // Technical roles - fewer exclusions, mainly domain-specific ones
+      'developer': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Claims Management') || f.includes('Six Sigma') || f.includes('Lean Manufacturing')
+      ),
+      'analyst': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Claims Management') || f.includes('DevOps') || f.includes('API')
+      ),
+
+      // General support roles
+      'assistant': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Black-Scholes') || f.includes('Clinical') ||
+        f.includes('Actuarial') || f.includes('Blockchain')
+      ),
+
+      // Research roles - exclude implementation-focused frameworks
+      'researcher': technicalFrameworks.filter(f => 
+        f.includes('DevOps') || f.includes('API') || f.includes('Six Sigma') ||
+        f.includes('Lean Manufacturing') || f.includes('Actuarial') || f.includes('Claims Management')
+      ),
+
+      // Specialized roles
+      'product-manager': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Six Sigma') || f.includes('Lean Manufacturing')
+      ),
+      'ux-designer': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Six Sigma') || f.includes('Black-Scholes') || f.includes('Blockchain')
+      ),
+      'project-manager': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Black-Scholes') || f.includes('Blockchain')
+      ),
+      'therapist': technicalFrameworks.filter(f => 
+        f.includes('Cybersecurity') || f.includes('OWASP') || f.includes('API') || 
+        f.includes('DevOps') || f.includes('Black-Scholes') || f.includes('Six Sigma') ||
+        f.includes('Actuarial') || f.includes('Blockchain')
+      ),
+      'compliance-officer': technicalFrameworks.filter(f => 
+        f.includes('API') || f.includes('DevOps') || f.includes('Six Sigma') ||
+        f.includes('Lean Manufacturing') || f.includes('Clinical') || f.includes('Healthcare')
+      ),
+      'qa-specialist': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Black-Scholes') || f.includes('Blockchain')
+      ),
+      'technical-writer': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Six Sigma') || f.includes('Black-Scholes')
+      ),
+      'innovation-catalyst': technicalFrameworks.filter(f => 
+        f.includes('Clinical') || f.includes('Healthcare') || f.includes('Actuarial') ||
+        f.includes('Claims Management')
+      )
+    }
+    
+    const exclusions = exclusionRules[agentType] || []
+    return exclusions.some(excluded => framework.includes(excluded))
   }
 
   // Get keywords that help match industry frameworks to agent types
