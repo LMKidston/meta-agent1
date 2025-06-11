@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/types/form-data'
-import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS, AGENT_TYPE_FRAMEWORK_PREFERENCES } from '@/lib/prompt-templates'
+import { generatePrompt, AGENT_TYPES, INDUSTRIES, INDUSTRY_FRAMEWORKS, INDUSTRY_RECOMMENDATION_STYLES, AGENT_TYPE_RECOMMENDATION_PATTERNS, AGENT_TYPE_FRAMEWORK_PREFERENCES, AGENT_TYPE_DEPTH_CONCEPTS } from '@/lib/prompt-templates'
 import { Copy, Check } from 'lucide-react'
 
 const initialFormData: FormData = {
@@ -155,6 +155,32 @@ export default function MetaAgentForm() {
 
     // Default to industry styles
     return industryStyles
+  }
+
+  // Get agent-specific depth concept
+  const getDepthConcept = () => {
+    if (!formData.agentType) {
+      return {
+        concept: 'Analysis Depth',
+        question: 'How deep should the analysis be?',
+        options: [
+          { value: 'surface', label: 'Surface-level overview' },
+          { value: 'moderate', label: 'Moderate depth with key insights' },
+          { value: 'comprehensive', label: 'Comprehensive deep-dive analysis' },
+          { value: 'exhaustive', label: 'Exhaustive analysis with all factors' }
+        ]
+      }
+    }
+    return AGENT_TYPE_DEPTH_CONCEPTS[formData.agentType as keyof typeof AGENT_TYPE_DEPTH_CONCEPTS] || {
+      concept: 'Analysis Depth',
+      question: 'How deep should the analysis be?',
+      options: [
+        { value: 'surface', label: 'Surface-level overview' },
+        { value: 'moderate', label: 'Moderate depth with key insights' },
+        { value: 'comprehensive', label: 'Comprehensive deep-dive analysis' },
+        { value: 'exhaustive', label: 'Exhaustive analysis with all factors' }
+      ]
+    }
   }
 
   return (
@@ -462,15 +488,15 @@ export default function MetaAgentForm() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              How deep should the analysis be?
+              {getDepthConcept().question}
+              {formData.agentType && (
+                <span className="text-sm text-blue-600 block mt-1">
+                  {getDepthConcept().concept} for {formData.agentType}
+                </span>
+              )}
             </label>
             <div className="space-y-2">
-              {[
-                { value: 'surface', label: 'Surface-level overview' },
-                { value: 'moderate', label: 'Moderate depth with key insights' },
-                { value: 'comprehensive', label: 'Comprehensive deep-dive analysis' },
-                { value: 'exhaustive', label: 'Exhaustive analysis with all factors' }
-              ].map((option) => (
+              {getDepthConcept().options.map((option) => (
                 <label key={option.value} className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded cursor-pointer">
                   <input
                     type="radio"

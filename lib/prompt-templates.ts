@@ -914,3 +914,207 @@ export const AGENT_TYPE_FRAMEWORK_PREFERENCES = {
     'Market Validation', 'Technology Assessment', 'Innovation Metrics'
   ]
 }
+
+// Agent-type-specific depth concepts (what "depth" means for each agent type)
+export const AGENT_TYPE_DEPTH_CONCEPTS = {
+  consultant: {
+    concept: 'Strategic Depth',
+    question: 'How comprehensive should the strategic analysis be?',
+    options: [
+      { value: 'high-level', label: 'High-level strategic overview' },
+      { value: 'detailed', label: 'Detailed strategic analysis with recommendations' },
+      { value: 'comprehensive', label: 'Comprehensive strategic deep-dive with implementation plans' },
+      { value: 'exhaustive', label: 'Exhaustive analysis with multiple scenarios and risk assessment' }
+    ]
+  },
+  teacher: {
+    concept: 'Learning Depth',
+    question: 'How thorough should the educational guidance be?',
+    options: [
+      { value: 'overview', label: 'Basic concept overview' },
+      { value: 'structured', label: 'Structured learning with examples' },
+      { value: 'comprehensive', label: 'Comprehensive instruction with practice exercises' },
+      { value: 'mastery', label: 'Complete mastery-level instruction with assessments' }
+    ]
+  },
+  assistant: {
+    concept: 'Task Detail',
+    question: 'How detailed should task guidance be?',
+    options: [
+      { value: 'basic', label: 'Basic task outline' },
+      { value: 'step-by-step', label: 'Detailed step-by-step instructions' },
+      { value: 'comprehensive', label: 'Comprehensive task management with resources' },
+      { value: 'full-support', label: 'Full support with contingency planning' }
+    ]
+  },
+  analyst: {
+    concept: 'Analysis Depth',
+    question: 'How deep should the data analysis be?',
+    options: [
+      { value: 'surface', label: 'Surface-level insights' },
+      { value: 'moderate', label: 'Moderate analysis with key findings' },
+      { value: 'comprehensive', label: 'Comprehensive statistical analysis' },
+      { value: 'exhaustive', label: 'Exhaustive analysis with predictive modeling' }
+    ]
+  },
+  creator: {
+    concept: 'Creative Exploration',
+    question: 'How extensive should the creative exploration be?',
+    options: [
+      { value: 'initial-concepts', label: 'Initial creative concepts' },
+      { value: 'developed-ideas', label: 'Well-developed creative ideas' },
+      { value: 'comprehensive-exploration', label: 'Comprehensive creative exploration with variants' },
+      { value: 'full-creative-suite', label: 'Complete creative suite with multiple directions' }
+    ]
+  },
+  developer: {
+    concept: 'Technical Depth',
+    question: 'How detailed should the technical guidance be?',
+    options: [
+      { value: 'conceptual', label: 'Conceptual technical overview' },
+      { value: 'implementation', label: 'Implementation-ready technical details' },
+      { value: 'comprehensive', label: 'Comprehensive technical solution with best practices' },
+      { value: 'enterprise', label: 'Enterprise-level technical architecture' }
+    ]
+  },
+  researcher: {
+    concept: 'Research Depth',
+    question: 'How thorough should the research be?',
+    options: [
+      { value: 'preliminary', label: 'Preliminary research findings' },
+      { value: 'focused', label: 'Focused research with key sources' },
+      { value: 'comprehensive', label: 'Comprehensive research with methodology' },
+      { value: 'academic', label: 'Academic-level research with full citations' }
+    ]
+  },
+  coach: {
+    concept: 'Coaching Intensity',
+    question: 'How intensive should the coaching support be?',
+    options: [
+      { value: 'motivational', label: 'Motivational guidance and encouragement' },
+      { value: 'structured', label: 'Structured coaching with clear goals' },
+      { value: 'comprehensive', label: 'Comprehensive coaching with skill development' },
+      { value: 'transformation', label: 'Transformational coaching with accountability' }
+    ]
+  },
+  'product-manager': {
+    concept: 'Product Strategy Depth',
+    question: 'How comprehensive should product strategy be?',
+    options: [
+      { value: 'feature-level', label: 'Feature-level product guidance' },
+      { value: 'roadmap', label: 'Product roadmap and prioritization' },
+      { value: 'comprehensive', label: 'Comprehensive product strategy with market analysis' },
+      { value: 'full-lifecycle', label: 'Full product lifecycle management' }
+    ]
+  },
+  'ux-designer': {
+    concept: 'Design Depth',
+    question: 'How detailed should the design process be?',
+    options: [
+      { value: 'concept', label: 'Design concept and direction' },
+      { value: 'wireframes', label: 'Wireframes and user flow design' },
+      { value: 'comprehensive', label: 'Comprehensive design system and prototypes' },
+      { value: 'full-experience', label: 'Complete user experience ecosystem' }
+    ]
+  },
+  'project-manager': {
+    concept: 'Project Management Scope',
+    question: 'How comprehensive should project management be?',
+    options: [
+      { value: 'basic-planning', label: 'Basic project planning and tracking' },
+      { value: 'structured', label: 'Structured project management with milestones' },
+      { value: 'comprehensive', label: 'Comprehensive PM with risk and resource management' },
+      { value: 'enterprise', label: 'Enterprise-level project portfolio management' }
+    ]
+  },
+  'sales-rep': {
+    concept: 'Sales Engagement Depth',
+    question: 'How comprehensive should sales support be?',
+    options: [
+      { value: 'lead-qualification', label: 'Lead qualification and initial outreach' },
+      { value: 'relationship-building', label: 'Relationship building and needs assessment' },
+      { value: 'comprehensive', label: 'Comprehensive sales process with objection handling' },
+      { value: 'account-management', label: 'Full account management and expansion' }
+    ]
+  },
+  'hr-specialist': {
+    concept: 'HR Support Depth',
+    question: 'How comprehensive should HR guidance be?',
+    options: [
+      { value: 'policy-guidance', label: 'Basic policy guidance and compliance' },
+      { value: 'people-management', label: 'People management and employee relations' },
+      { value: 'comprehensive', label: 'Comprehensive HR strategy and development' },
+      { value: 'organizational', label: 'Organizational transformation and culture change' }
+    ]
+  },
+  'customer-success': {
+    concept: 'Customer Success Depth',
+    question: 'How comprehensive should customer success support be?',
+    options: [
+      { value: 'onboarding', label: 'Customer onboarding and initial success' },
+      { value: 'relationship', label: 'Ongoing relationship management and support' },
+      { value: 'comprehensive', label: 'Comprehensive success planning and expansion' },
+      { value: 'strategic-partnership', label: 'Strategic partnership and advocacy development' }
+    ]
+  },
+  'investment-advisor': {
+    concept: 'Investment Analysis Depth',
+    question: 'How thorough should investment analysis be?',
+    options: [
+      { value: 'basic-screening', label: 'Basic investment screening and recommendations' },
+      { value: 'fundamental', label: 'Fundamental analysis with risk assessment' },
+      { value: 'comprehensive', label: 'Comprehensive analysis with portfolio optimization' },
+      { value: 'institutional', label: 'Institutional-level analysis with quantitative modeling' }
+    ]
+  },
+  therapist: {
+    concept: 'Therapeutic Depth',
+    question: 'How comprehensive should therapeutic support be?',
+    options: [
+      { value: 'supportive', label: 'Supportive guidance and coping strategies' },
+      { value: 'structured', label: 'Structured therapeutic interventions' },
+      { value: 'comprehensive', label: 'Comprehensive treatment planning and progress tracking' },
+      { value: 'intensive', label: 'Intensive therapeutic support with multi-modal approaches' }
+    ]
+  },
+  'compliance-officer': {
+    concept: 'Compliance Depth',
+    question: 'How comprehensive should compliance guidance be?',
+    options: [
+      { value: 'basic-requirements', label: 'Basic regulatory requirements and guidelines' },
+      { value: 'policy-development', label: 'Policy development and implementation' },
+      { value: 'comprehensive', label: 'Comprehensive compliance framework and monitoring' },
+      { value: 'enterprise', label: 'Enterprise-wide compliance and risk management' }
+    ]
+  },
+  'qa-specialist': {
+    concept: 'Quality Assurance Depth',
+    question: 'How comprehensive should quality assurance be?',
+    options: [
+      { value: 'basic-testing', label: 'Basic testing and quality checks' },
+      { value: 'systematic', label: 'Systematic testing with documented procedures' },
+      { value: 'comprehensive', label: 'Comprehensive QA with process improvement' },
+      { value: 'enterprise', label: 'Enterprise-level quality management systems' }
+    ]
+  },
+  'technical-writer': {
+    concept: 'Documentation Depth',
+    question: 'How comprehensive should documentation be?',
+    options: [
+      { value: 'basic-guides', label: 'Basic user guides and instructions' },
+      { value: 'structured', label: 'Structured documentation with examples' },
+      { value: 'comprehensive', label: 'Comprehensive documentation suite with tutorials' },
+      { value: 'enterprise', label: 'Enterprise-level documentation ecosystem' }
+    ]
+  },
+  'innovation-catalyst': {
+    concept: 'Innovation Exploration',
+    question: 'How extensive should innovation exploration be?',
+    options: [
+      { value: 'ideation', label: 'Creative ideation and concept generation' },
+      { value: 'development', label: 'Concept development and feasibility assessment' },
+      { value: 'comprehensive', label: 'Comprehensive innovation pipeline with prototyping' },
+      { value: 'transformation', label: 'Organizational innovation transformation' }
+    ]
+  }
+}
